@@ -10,6 +10,8 @@ const userfunctions = require('./routes/user.route.js');
 const clubfunctions = require('./routes/club.route')
 const programfunctions = require('./routes/program.route')
 const sessionfunctions = require('./routes/session.route')
+const notifications = require('./routes/pushNotifications.route')
+var fs = require('fs');
 
 dotenv.config();
 
@@ -47,13 +49,56 @@ const storagePrograms = multer.diskStorage({
 });
 
 const uploadProgram = multer({ storage: storagePrograms });
-app.post("/api/uploadPrograms", uploadProgram.single("file"), (req, res) => {
+
+app.post("/api/uploadProgram", uploadProgram.single("file"), (req, res) => {
   try {
     return res.status(200).json("Program File uploded successfully");
   } catch (error) {
     console.error('UploadProgram ERROR !!'+error);
   }
 });
+
+app.post("/api/updateProgram/:nameFile", uploadProgram.single("file"), (req, res) => {
+  try {
+    fs.unlinkSync(`public/images/programs/${req.params.nameFile}`);
+    return res.status(200).json("Program File uploded successfully");
+  } catch (error) {
+    console.error('UploadProgram ERROR !!'+error);
+  }
+});
+
+
+//images Sessions uploads
+const storageSessions = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/sessions");
+  },
+  filename: (req, file, cb) => {
+
+    cb(null, req.body.name);
+  },
+});
+
+const uploadSessions = multer({ storage: storageSessions });
+
+app.post("/api/postSession", uploadSessions.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("Session File uploded successfully");
+  } catch (error) {
+    console.error('UploadSession ERROR !!'+error);
+  }
+});
+
+
+app.post("/api/uploadSession/:nameFile", uploadSessions.single("file"), (req, res) => {
+  try {
+    fs.unlinkSync(`public/images/sessions/${req.params.nameFile}`);
+    return res.status(200).json("Session File updated successfully");
+  } catch (error) {
+    console.error('UploadSession ERROR !!'+error);
+  }
+});
+
 //images Users uploads
 const storageUsers = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -65,19 +110,29 @@ const storageUsers = multer.diskStorage({
 });
 
 const uploadUsers = multer({ storage: storageUsers });
-app.post("/api/uploadUsers", uploadUsers.single("file"), (req, res) => {
+
+
+app.post("/api/updateUser/:nameFile", uploadUsers.single("file"), (req, res) => {
   try {
-    return res.status(200).json("Users File uploded successfully");
+    if (req.params.nameFile === 'noAvatar.png') {
+    return res.status(200).json("Users File updated successfully");
+    } else {
+      fs.unlinkSync(`public/images/users/${req.params.nameFile}`);
+    return res.status(200).json("Users File updated successfully");
+    }
+    
   } catch (error) {
     console.error('UploadUser ERROR !!'+ error);
   }
 });
+
 
 //routes
 app.use('/api', userfunctions);
 app.use('/api', clubfunctions);
 app.use('/api', programfunctions);
 app.use('/api', sessionfunctions);
+app.use('/api', notifications)
 
 
 app.listen(process.env.PORT, () => {

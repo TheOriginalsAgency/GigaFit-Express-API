@@ -1,8 +1,11 @@
 const User = require("../models/User.model");
+const Logger = require("../models/logger.model");
 const { RegisterValidation, LoginValidation } = require('../validations/authValidation');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const { listen } = require("express/lib/application");
+const messages = require('../common/common_messages/return_messages')
+const common_methods = require('../common/common_methods/common_methods')
 
 let globalToken;
 
@@ -21,7 +24,7 @@ const userRegistration = async (req, res) => {
     try {
       //Validation of Entered Values
       const {error} = RegisterValidation(req.body);
-      if(error) return res.status(400).send('Validation Error : !!' + error.details[0].message);
+      if(error) return res.status(400).send(error.details[0].message);
       const salt = await bcrypt.genSalt(10);
       //generate new password
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -36,10 +39,15 @@ const userRegistration = async (req, res) => {
         dateBirth: req.body.dateBirth,
         password: hashedPassword,
       });
-  
+      console.log(newUser);
+
+      const checkUser = await User.findOne({ email: newUser.email });
+        console.log(checkUser);
+        if(checkUser) return res.status(404).json('Cet Email existe déja')
       //save user and respond
       const user = await newUser.save();
-      res.status(200).json(user);
+      const success = 'Success'
+      res.status(200).json({user, success});
 
     } catch (err) {
       res.status(500).json(err)
@@ -51,23 +59,74 @@ const userRegistration = async (req, res) => {
     try {
       //Validation of Entered Values
         const {error} = LoginValidation(req.body);
-        if(error) return res.status(400).send(error.details[0].message);
+        if(error) return res.status(400).json(error.details[0].message);
 
         const user = await User.findOne({ email: req.body.email });
-        !user && res.status(404).json("user not found");
         console.log(user);
+        if(!user) return res.status(404).json('Cet Email n\'existe pas')
+        
         const validPassword = await bcrypt.compare(req.body.password, user.password)
-        !validPassword && res.status(400).json("wrong password")
+        if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
     
         const token = jwt.sign({user}, process.env.SECRET_KEY);
         console.log(token);
+        const success = 'Success'
+        const newLog = new Logger({
+          id_user: user._id,
+          status: 'LogIn',
+          gender: user.gender
+      });
+        const logger = await newLog.save();
         // res.cookie("auth-token", token, {expire: new Date().setHours({hours: 3})})
-        res.status(200).json({token, user})
+        res.status(200).json({token, user, success})
 
       } catch (err) {
         res.status(500).json(err)
       }
   }
+
+
+  //  generate && send new password
+const forgetPassword = async (req, res) => {
+    const user = await User.findOne({ email: req.params.email })
+    console.log(user);
+    try {
+        if (user) {
+            //  user found
+            const newPassword = common_methods.generateRandomPassword()
+            const salt = await bcrypt.genSalt(10);
+            //generate new hashed password
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+            const updatedUser = await User.findOneAndUpdate({ email: req.params.email }, { password: hashedPassword })
+
+            if (updatedUser) {
+                //  password updated successfully
+                common_methods.sendMail(req.params.email, newPassword)
+                return res.status(201).json({
+                    ok: true,
+                    message: messages.returnMessages.MAIL_SUCCESS
+                });
+            }
+
+        } else {
+            //  invalid mail address
+            return res.status(404).json({
+                ok: false,
+                message: messages.returnMessages.NOT_FOUND
+            })
+        }
+    } catch (error) {
+        console.log('Forgot ERROR 1 ...'+error);
+        return res.status(500).json({
+            ok: false,
+            message: messages.returnMessages.SERVER_ERROR
+        })
+        
+    }
+}
+
+
+
   const adminLogin = async (req, res) => {
     try {
       //Validation of Entered Values
@@ -85,6 +144,13 @@ const userRegistration = async (req, res) => {
         console.log(token);
         globalToken = token;
 
+        const success = 'Success'
+        const newLog = new Logger({
+          id_user: user._id,
+          status: 'LogIn',
+          gender: user.gender
+        });
+        const logger = await newLog.save();
         // const date = new Date();
         // const expireDate = date.setSeconds({sec: 20}).toString();
         // console.log(date);
@@ -97,8 +163,11 @@ const userRegistration = async (req, res) => {
       }
   }
   const VerifyToken = (req, res) => {
-    const result = jwt.decode(globalToken);
+    if (globalToken) {
+      const result = jwt.decode(globalToken);
     res.status(200).json(result.user)
+    }
+    
   }
 
   const logOut = (req, res) => {
@@ -201,4 +270,9 @@ const updateProfile = async (req, res) => {
   }
 }
 
-  module.exports = { oneUser, updatePicture, userRegistration, userLogin, adminLogin, logOut, updateProfile, VerifyToken, updateTarget, updateFirstname};
+// const getCountUsersByMonth = (req, res) => {
+
+//   const allLogInByMonth = await Logger.count({ createdAt: {$lt: new Date, $gte: new} });
+// }
+
+  module.exports = { oneUser, updatePicture, userRegistration, userLogin, adminLogin, logOut, forgetPassword, updateProfile, VerifyToken, updateTarget, updateFirstname};

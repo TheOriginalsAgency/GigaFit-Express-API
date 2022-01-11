@@ -15,10 +15,12 @@ const allPrograms = async (req, res) => {
 
 // Get One Program
 const oneProgram = async (req, res) => {
+    const program = await Program.findOne({ _id: req.params.id });
     try {
 
-        const program = await Program.findOne({ _id: req.params.id });
-        res.status(200).json(program);
+        if (program) {
+            res.status(200).send(program);
+        } 
 
     } catch(err) {
         res.status(500).json(err);
@@ -40,6 +42,7 @@ const addProgram = async (req, res) => {
     }
 }
 
+
 // Update Program
 const updateProgram = async (req, res) => {
     const targetedProgram = await Program.findOne({ _id: req.params.id });
@@ -55,13 +58,14 @@ const updateProgram = async (req, res) => {
     
 }
 
+
 // delete Program
 const deleteProgram = async (req, res) => {
-    const targetedProgram = await Program.findOne({ uuid: req.params.id });
+    const targetedProgram = await Program.findOne({ _id: req.params.id });
     try {
         if(targetedProgram) {
             const program = await targetedProgram.deleteOne();
-            res.status(500).json(program);
+            res.status(200).json(program);
         }
     } catch(err) {
         res.status(500).json(err);

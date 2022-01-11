@@ -12,7 +12,7 @@ const ProgramSchema = new mongoose.Schema(
     picture: {
         type: String,
         required: true,
-        default: "http://192.168.1.6:2022/images/defaultProgram.png",
+        default: "defaultProgram.png",
       },
     video: {
       type: String,
@@ -52,6 +52,14 @@ const ProgramSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    isEditMode: {
+      type: Boolean,
+      default: false
+    },
+    isDeleteMode: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true, versionKey: false }
 );

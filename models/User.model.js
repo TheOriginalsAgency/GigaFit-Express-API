@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "../public/images/noAvatar.png",
+      default: "noAvatar.png",
     },
     isAdmin: {
       type: Boolean,

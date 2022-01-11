@@ -1,10 +1,11 @@
 const express = require('express');
-const { oneUser, updatePicture, updateTarget, updateFirstname, userRegistration, userLogin, adminLogin, logOut, updateProfile, VerifyToken } = require('../controllers/User.controller');
+const { oneUser, updatePicture, updateTarget, updateFirstname, userRegistration, userLogin, adminLogin, logOut, forgetPassword, updateProfile, VerifyToken } = require('../controllers/User.controller');
 const router = express.Router();
 
 router.post('/user/registration', userRegistration);
 router.post('/user/login', userLogin);
 router.post('/user/admin-login', adminLogin)
+router.post('/user/forgotPassword/:email', forgetPassword)
 router.get('/user/verify', VerifyToken)
 router.get('/user/oneUser/:email', oneUser);
 router.put('/user/updatePicture/:id', updatePicture)
