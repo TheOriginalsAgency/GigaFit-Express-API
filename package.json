@@ -2,13 +2,13 @@
   "name": "Gigafit-API-V1",
   "version": "1.0.0",
   "description": "api that serve the front-office & back-office for GigaFitApp",
-  "main": "server.js",
+  "main": "index.js",
   "repository": "https://github.com/Mohammed1Dev/GigaFit-Express-API.git",
   "author": "Mohammed-Amine Bettaoui",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
