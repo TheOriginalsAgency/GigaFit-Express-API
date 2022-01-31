@@ -55,9 +55,16 @@ const deleteSession = async (req, res) => {
     }
 }
 
+const getAllExistingSessions = async (req, res) => {
+    const allSessionsCount = await Session.count();
+    res.json(allSessionsCount);
+
+}
+
 module.exports = {
     allSessions,
     addSession,
     updateSession,
-    deleteSession
+    deleteSession,
+    getAllExistingSessions
 }

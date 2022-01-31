@@ -1,17 +1,30 @@
 const express = require('express');
-const { oneUser, updatePicture, updateTarget, updateFirstname, userRegistration, userLogin, adminLogin, logOut, forgetPassword, updateProfile, VerifyToken } = require('../controllers/User.controller');
+const {
+    getCountUsersByMonth,
+    oneUser, 
+    updatePicture, 
+    updateTarget, 
+    updatePassword, 
+    userRegistration, 
+    userLogin, 
+    adminLogin, 
+    logOut, 
+    forgetPassword,
+    updateProfile, 
+    getAllExistingUsers } = require('../controllers/User.controller');
 const router = express.Router();
 
 router.post('/user/registration', userRegistration);
 router.post('/user/login', userLogin);
 router.post('/user/admin-login', adminLogin)
 router.post('/user/forgotPassword/:email', forgetPassword)
-router.get('/user/verify', VerifyToken)
 router.get('/user/oneUser/:email', oneUser);
 router.put('/user/updatePicture/:id', updatePicture)
 router.put('/user/updateTarget/:id/:arg', updateTarget)
-router.put('/user/updateFirstname/:id', updateFirstname)
+router.put('/user/updatePassword/:id/:oldPassword', updatePassword)
 router.get('/user/logOut', logOut);
 router.put('/user/update/:id', updateProfile)
+router.get('/users/getDailyLogs', getCountUsersByMonth)
+router.get('/UsersNum', getAllExistingUsers)
 
 module.exports = router;

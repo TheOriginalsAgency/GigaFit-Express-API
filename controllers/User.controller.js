@@ -71,10 +71,19 @@ const userRegistration = async (req, res) => {
         const token = jwt.sign({user}, process.env.SECRET_KEY);
         console.log(token);
         const success = 'Success'
+  
+        const t = new Date();
+        const date = ('0' + t.getDate()).slice(-2);
+        const month = ('0' + (t.getMonth() + 1)).slice(-2);
+        const year = t.getFullYear();
+        const loggedUser = await Logger.findOne({id_user: user._id, dateLog : `${date}-${month}-${year}`})
+        console.log(loggedUser);
+        if(loggedUser) return res.status(200).json({token, user, success});
         const newLog = new Logger({
           id_user: user._id,
           status: 'LogIn',
-          gender: user.gender
+          gender: user.gender,
+          dateLog: `${date}-${month}-${year}`,
       });
         const logger = await newLog.save();
         // res.cookie("auth-token", token, {expire: new Date().setHours({hours: 3})})
@@ -144,31 +153,31 @@ const forgetPassword = async (req, res) => {
         console.log(token);
         globalToken = token;
 
-        const success = 'Success'
+        const success = 'Success';
+    
+        const t = new Date();
+        const date = ('0' + t.getDate()).slice(-2);
+        const month = ('0' + (t.getMonth() + 1)).slice(-2);
+        const year = t.getFullYear();
+        const loggedUser = await Logger.findOne({id_user: user._id, dateLog : `${date}-${month}-${year}`})
+        console.log(loggedUser);
+        if(loggedUser) return res.status(200).json({token, user, success});
+
         const newLog = new Logger({
           id_user: user._id,
           status: 'LogIn',
-          gender: user.gender
+          gender: user.gender,
+          dateLog: `${date}-${month}-${year}`,
         });
         const logger = await newLog.save();
-        // const date = new Date();
-        // const expireDate = date.setSeconds({sec: 20}).toString();
-        // console.log(date);
-        // console.log(expireDate);
-        // res.cookie("auth-token", token)
+
         res.status(200).json({token, user})
 
       } catch (err) {
         res.status(500).json(err)
       }
   }
-  const VerifyToken = (req, res) => {
-    if (globalToken) {
-      const result = jwt.decode(globalToken);
-    res.status(200).json(result.user)
-    }
-    
-  }
+
 
   const logOut = (req, res) => {
     globalToken = {}
@@ -224,16 +233,24 @@ const updateTarget = async (req, res) => {
   }
 
 }
-const updateFirstname = async (req, res) => {
-  const filter = { _id: req.params.id };
-  const update = { firstname: req.body.firstname };
-
-
+const updatePassword = async (req, res) => {
   try {
-    let user = await User.findOneAndUpdate(filter, update)
+      const filter = { _id: req.params.id };
 
-    res.status(200).json(user);
-    console.log(user);
+      const user = await User.findOne(filter);
+        console.log(user);
+        if(!user) return res.status(404).json('Ce compte n\'existe pas')
+        
+        const validPassword = await bcrypt.compare(req.params.oldPassword, user.password)
+        if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
+        const salt = await bcrypt.genSalt(10);
+        //generate new password
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const update = { password: hashedPassword };
+        let updatedUser = await User.findOneAndUpdate(filter, update)
+        console.log(updatedUser);
+        const success = 'Success'
+      res.status(200).json({updatedUser, success});
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -270,9 +287,77 @@ const updateProfile = async (req, res) => {
   }
 }
 
-// const getCountUsersByMonth = (req, res) => {
+const getCountUsersByMonth = async (req, res) => {
 
-//   const allLogInByMonth = await Logger.count({ createdAt: {$lt: new Date, $gte: new} });
-// }
+  //const allMaleLogInByDay = await Logger.count({ gender: 'Male',$group: 'dateLog'});
+  //const allFemaleLogInByDay = await Logger.count({ gender: 'Female',$group: 'dateLog'});
+  //var all = allMaleLogInByDay + allFemaleLogInByDay;
+  var logList = [];
+    const All = await Logger.aggregate([
+    { $group: {_id: '$dateLog',all: { $sum: 1 }}}
+  ]);
+  const Males = await Logger.aggregate([
+    { $match: {gender: 'Male'}},
+    { $group: {_id: '$dateLog',mens: { $sum: 1 }}}
+  ]);
+  const Womens = await Logger.aggregate([
+    { $match: {gender: 'Female'}},
+    { $group: {_id: '$dateLog',womens: { $sum: 1 }}}
+  ]);
 
-  module.exports = { oneUser, updatePicture, userRegistration, userLogin, adminLogin, logOut, forgetPassword, updateProfile, VerifyToken, updateTarget, updateFirstname};
+
+  for(var i=0; i < All.length; i++){
+    for (let j = 0; j < Males.length; j++) {
+      if (All[i]._id == Males[j]._id) {
+        All[i].mens = Males[j].mens;
+      }
+    }
+  }
+
+  for(var i=0; i < All.length; i++){
+    for (let j = 0; j < Womens.length; j++) {
+      if (All[i]._id == Womens[j]._id) {
+        All[i].womens = Womens[j].womens;
+      }
+      
+    }
+  }
+
+  for(var i=0; i < All.length; i++){
+    if (!All[i].womens){
+        All[i].womens = 0;
+    } 
+  }
+  for(var i=0; i < All.length; i++){
+    if (!All[i].mens){
+        All[i].mens = 0;
+    } 
+  }
+
+  res.status(200).json(
+      All
+    );
+
+}
+
+
+const getAllExistingUsers = async (req, res) => {
+    const allUsers = await User.count();
+    res.json(allUsers);
+
+}
+
+  module.exports = { 
+    oneUser, 
+    updatePicture, 
+    userRegistration, 
+    userLogin, 
+    adminLogin, 
+    logOut, 
+    forgetPassword, 
+    updateProfile, 
+    updateTarget, 
+    updatePassword,
+    getCountUsersByMonth,
+    getAllExistingUsers
+    };

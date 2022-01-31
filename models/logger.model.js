@@ -4,15 +4,19 @@ const LoggerSchema = mongoose.Schema(
     {
         id_user: {
             type: String,
-            required: true,
+            require: true,
         },
         status: {
             type: String,
-            enum: ['LogIn','LogOut']
+            enum: ['LogIn','LogIn-Admin','LogIn-superAdmin','LogOut']
         },
         gender: {
             type: String,
             enum: ['Male', 'Female'],
+            require: true,
+        },
+        dateLog: {
+            type: String,
             require: true,
         }
     },

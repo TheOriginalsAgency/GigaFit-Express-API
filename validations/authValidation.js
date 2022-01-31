@@ -12,9 +12,9 @@ const RegisterValidation = data =>{
         gender: Joi.string()
                 .alphanum()
                 .required(),
-        dateBirth: Joi.date(),
+        dateBirth: Joi.string(),
         email: Joi.string()
-                .pattern(new RegExp('^[a-zA-Z0-9_\-\.]+@([a-zA-Z0-9_\-]{4,6})\.([a-zA-Z]{2,3})$'))
+                .pattern(new RegExp('^[a-zA-Z0-9_\.\-]+@([a-zA-Z0-9_\-]{4,6})\.([a-zA-Z]{2,3})$'))
                 .required(),
         tel: Joi.string()
                 .required(),

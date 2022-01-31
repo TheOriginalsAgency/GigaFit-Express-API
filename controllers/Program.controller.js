@@ -105,6 +105,12 @@ const bodyPartQueryProgram = async (req, res) => {
     }
 }
 
+const getAllExistingPrograms = async (req, res) => {
+    const allPrograms = await Program.count();
+    res.json(allPrograms);
+
+}
+
 module.exports = {
     allPrograms,
     oneProgram,
@@ -112,5 +118,6 @@ module.exports = {
     updateProgram,
     deleteProgram,
     cardioPrograms,
-    bodyPartQueryProgram
+    bodyPartQueryProgram,
+    getAllExistingPrograms
 }

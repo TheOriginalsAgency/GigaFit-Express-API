@@ -38,7 +38,24 @@ function sendMail(receiver, newPassword) {
         bcc: receiver,
         subject: 'New password created successfully',
         text: newPassword,
-        html: '<div>Your GigaFit Password account is : <br><b>'+ newPassword +'</b></div>',
+        html: `<p><b>Hello</b> to myself <img src="cid:note@example.com"/></p>
+        <p>Here's a nyan cat for you as an embedded attachment:<br/><img src="cid:nyan@example.com"/></p>`,
+
+        // AMP4EMAIL
+        amp: `<!doctype html>
+        <html ⚡4email>
+          <head>
+            <meta charset="utf-8">
+            <style amp4email-boilerplate>body{visibility:hidden}</style>
+            <script async src="https://cdn.ampproject.org/v0.js"></script>
+            <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
+          </head>
+          <body>
+            <p><b>Hello</b> to myself <amp-img src="https://cldup.com/P0b1bUmEet.png" width="16" height="16"/></p>
+            <p>No embedded image attachments in AMP, so here's a linked nyan cat instead:<br/>
+              <amp-anim src="https://cldup.com/D72zpdwI-i.gif" width="500" height="350"/></p>
+          </body>
+        </html>`,
         attachements: [
             { filename: 'logoGreen.png', path: '../../public/images/users/logoGreen.png'}
         ],

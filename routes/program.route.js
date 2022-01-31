@@ -1,5 +1,5 @@
 const express = require('express');
-const { allPrograms, oneProgram,  addProgram, updateProgram, deleteProgram, cardioPrograms, bodyPartQueryProgram } = require('../controllers/Program.controller')
+const { allPrograms, oneProgram,  addProgram, updateProgram, deleteProgram, cardioPrograms, bodyPartQueryProgram, getAllExistingPrograms } = require('../controllers/Program.controller')
 const router = express.Router()
 
 // Program Crud
@@ -12,5 +12,6 @@ router.delete('/program/delete/:id', deleteProgram)
 //Specific Querys
 router.get('/programs/cardio', cardioPrograms)
 router.get('/programs/customizedQuery/:worktype/:bodypart', bodyPartQueryProgram)
+router.get('/programsNum', getAllExistingPrograms)
 
 module.exports = router;

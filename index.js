@@ -11,6 +11,8 @@ const clubfunctions = require('./routes/club.route')
 const programfunctions = require('./routes/program.route')
 const sessionfunctions = require('./routes/session.route')
 const notifications = require('./routes/pushNotifications.route')
+const adminFunctions = require('./routes/admin.route')
+const superAdminFunctions = require('./routes/superAdmin.route')
 var fs = require('fs');
 
 dotenv.config();
@@ -137,6 +139,8 @@ app.use('/api', clubfunctions);
 app.use('/api', programfunctions);
 app.use('/api', sessionfunctions);
 app.use('/api', notifications)
+app.use('/api', adminFunctions)
+app.use('/api', superAdminFunctions)
 
 
 app.listen(process.env.PORT, () => {
