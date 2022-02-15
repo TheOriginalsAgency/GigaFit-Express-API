@@ -3,14 +3,17 @@ const repitition = require("./Repitition.model");
 
 const HistorySchema = mongoose.Schema(
     {
-        repititions: [repitition],
         program: {
-            type: ObjectId,
-            ref: "Program" 
+            type: String,
+            require: true
         },
         user: {
-            type: ObjectId,
-            ref: "User" 
+            type: String,
+            require: true
+        },
+        repitition: {
+            type: Array,
+            require: true
         }
     },
     { 
