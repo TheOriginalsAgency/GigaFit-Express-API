@@ -14,6 +14,7 @@ const notifications = require('./routes/pushNotifications.route')
 const adminFunctions = require('./routes/admin.route')
 const superAdminFunctions = require('./routes/superAdmin.route')
 const programHistoryFunctions = require('./routes/history.route')
+const resamaniaGigaFunctions = require('./routes/resamania.route')
 
 var fs = require('fs');
 
@@ -144,6 +145,7 @@ app.use('/api', notifications)
 app.use('/api', adminFunctions)
 app.use('/api', superAdminFunctions)
 app.use('/api', programHistoryFunctions)
+app.use('/api', resamaniaGigaFunctions)
 
 
 app.listen(process.env.PORT, () => {

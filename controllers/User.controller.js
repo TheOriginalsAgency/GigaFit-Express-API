@@ -360,4 +360,4 @@ const getAllExistingUsers = async (req, res) => {
     updatePassword,
     getCountUsersByMonth,
     getAllExistingUsers
-    };
+  };
