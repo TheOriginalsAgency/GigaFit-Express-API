@@ -20,6 +20,8 @@ var fs = require('fs');
 
 dotenv.config();
 
+app.use(globelmiddlewire)
+
 
 mongoose.connect(
   process.env.DB_CONNECT,
@@ -46,6 +48,21 @@ app.use(function(req,res,next){
     res.header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTION");
     next();
     })
+
+//globelmiddlewire
+
+function globelmiddlewire (req,res,next) {
+  var auth = req.headers['authorization']
+  if(req.url === '/api/user/login' || req.url === '/api/user/registration' || req.url === '/api/user/admin-login') return next()
+  const token = auth && auth.split(' ')[1]
+  if(token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.SECRET_KEY, (err,user) => {
+    if(err) return res.sendStatus(403)
+    req.user = user
+    next()
+  })
+}
 
 //images Programs uploads
 const storagePrograms = multer.diskStorage({
