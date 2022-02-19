@@ -15,12 +15,14 @@ const adminFunctions = require('./routes/admin.route')
 const superAdminFunctions = require('./routes/superAdmin.route')
 const programHistoryFunctions = require('./routes/history.route')
 const resamaniaGigaFunctions = require('./routes/resamania.route')
+const notificationFunction = require('./routes/notification.route')
+const jwt = require('jsonwebtoken')
 
 var fs = require('fs');
 
 dotenv.config();
 
-app.use(globelmiddlewire)
+
 
 
 mongoose.connect(
@@ -48,6 +50,8 @@ app.use(function(req,res,next){
     res.header("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, OPTION");
     next();
     })
+
+app.use(globelmiddlewire)
 
 //globelmiddlewire
 
@@ -163,6 +167,7 @@ app.use('/api', adminFunctions)
 app.use('/api', superAdminFunctions)
 app.use('/api', programHistoryFunctions)
 app.use('/api', resamaniaGigaFunctions)
+app.use('/api', notificationFunction)
 
 
 app.listen(process.env.PORT, () => {
