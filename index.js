@@ -15,12 +15,12 @@ const adminFunctions = require('./routes/admin.route')
 const superAdminFunctions = require('./routes/superAdmin.route')
 const programHistoryFunctions = require('./routes/history.route')
 const resamaniaGigaFunctions = require('./routes/resamania.route')
+const jwt = require('jsonwebtoken')
 
 var fs = require('fs');
 
 dotenv.config();
 
-app.use(globelmiddlewire)
 
 
 mongoose.connect(
@@ -36,6 +36,9 @@ app.get('/', (req, res) => {
 })
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+
+app.use(globelmiddlewire)
 
 //middleware
 app.use(express.json({limit: '50mb'}));
@@ -53,14 +56,13 @@ app.use(function(req,res,next){
 
 function globelmiddlewire (req,res,next) {
   var auth = req.headers['authorization']
-  if(req.url === '/api/user/login' || req.url === '/api/user/registration' || req.url === '/api/user/admin-login') return next()
+  if(req.url === '/api/user/login' || req.url === '/api/user/registration' || req.url === '/api/user/admin-login' || req.url === '/images') return next()
   const token = auth && auth.split(' ')[1]
   if(token == null) return res.sendStatus(401)
-
   jwt.verify(token, process.env.SECRET_KEY, (err,user) => {
     if(err) return res.sendStatus(403)
-    req.user = user
     next()
+    
   })
 }
 
