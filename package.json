@@ -25,6 +25,7 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.7.2",
     "nodemailer-express-handlebars": "^4.0.0",
+    "nodemon": "^2.0.15",
     "onesignal-node": "^3.3.0"
   }
 }
