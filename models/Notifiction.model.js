@@ -9,9 +9,10 @@ const NotificationSchema = mongoose.Schema(
             type: String,
             require: true
         },
-        date:{
-            type: Date,
-            require: true
+        destination:{
+            type: String,
+            require: true,
+            enum: ['allUsers', 'Males', 'Females']
         }
     },
     { 

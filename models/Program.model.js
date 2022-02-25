@@ -45,7 +45,7 @@ const ProgramSchema = new mongoose.Schema(
     },
     worktype: {
         type: String,
-        enum: ['Éxercice','Étirement', null],
+        enum: ['Exercice','Étirement', null],
         default: null,
     },
     clubs: {

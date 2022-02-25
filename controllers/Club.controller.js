@@ -17,9 +17,19 @@ const addClub = async (req, res) => {
       }
 }
 
+const oneClub = async (req, res) => {
+  try {
+      const club = await Club.findOne({_id: req.params.id});
+      res.status(200).json(club);
+  } catch (err) {
+      res.status(500).json(err);
+  }
+}
+
+
 const allClubs = async (req, res) => {
   try {
-      const Clubs = new Club.find();
+      const Clubs = await Club.find();
       res.status(200).json(Clubs);
   } catch (err) {
       res.status(500).json(err);
@@ -56,6 +66,7 @@ const deleteClub = async (req, res) => {
 
 module.exports = {
     addClub,
+    oneClub,
     allClubs,
     updateClub,
     deleteClub

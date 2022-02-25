@@ -10,6 +10,7 @@ const SessionSchema = mongoose.Schema(
         picture: {
             type: String,
             required: true,
+            default: 'defaultProgram.png'
         },
         programs: {
             type: Array,
@@ -30,6 +31,15 @@ const SessionSchema = mongoose.Schema(
         gender: {
             type: String,
             enum: ['Male','Female','Both']
+        },
+        belong: {
+            type: String,
+            enum: ['user', 'app'],
+            default: 'app'
+        },
+        user: {
+            type: String,
+            default: null
         }
 
     },
