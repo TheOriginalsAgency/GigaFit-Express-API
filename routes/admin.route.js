@@ -3,11 +3,13 @@ const {
     oneAdmin,
     AdminRegistration,
     AdminLogin,
-    VerifyToken } = require('../controllers/Admin.controller');
+    VerifyToken, 
+    Admins} = require('../controllers/Admin.controller');
 const router = express.Router();
 
 router.post('/admin/registration', AdminRegistration);
 router.get('/admin/data', oneAdmin);
+router.get('/admin/alladmin',Admins);
 
 
 

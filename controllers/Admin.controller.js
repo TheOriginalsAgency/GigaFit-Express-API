@@ -57,5 +57,6 @@ const AdminRegistration = async (req, res) => {
 
     module.exports = { 
         oneAdmin,
-        AdminRegistration
+        AdminRegistration,
+        Admins
     };

@@ -44,9 +44,10 @@ const AdminSchema = new mongoose.Schema(
       type: String,
       max: 50,
     },
-    clubs: {
-      type: Array,
-      default: [],
+    club: {
+      type: String,
+      default: '',
+      
     },
   },
   { timestamps: true, versionKey: false }
