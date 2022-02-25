@@ -4,7 +4,7 @@ const Session = require('../models/Session.model')
 const allSessions = async (req, res) => {
     try {
 
-        const sessions = await Session.find();
+        const sessions = await Session.find({belong: 'app'});
         res.status(200).json(sessions);
 
     } catch(err) {
@@ -12,6 +12,20 @@ const allSessions = async (req, res) => {
         console.log('My error !!! ' + err);
     }
 }
+
+// Get All Programms
+const userSessions = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const sessions = await Session.find({ belong: 'user' , user: userId});
+        res.status(200).json(sessions);
+
+    } catch(err) {
+        res.status(500).json(err);
+        console.log('My error !!! ' + err);
+    }
+}
+
 
 // Add new Program
 const addSession = async (req, res) => {
@@ -63,6 +77,7 @@ const getAllExistingSessions = async (req, res) => {
 
 module.exports = {
     allSessions,
+    userSessions,
     addSession,
     updateSession,
     deleteSession,
