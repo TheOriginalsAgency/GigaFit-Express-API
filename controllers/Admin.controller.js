@@ -9,7 +9,7 @@ const common_methods = require('../common/common_methods/common_methods')
 
 const Admins = async (req,res) => {
   try {
-    const admins = await Admin;
+    const admins = await Admin.find();
     res.status(200).json(admins);
   } catch (error) {
     res.status(404).json("no Admin");
