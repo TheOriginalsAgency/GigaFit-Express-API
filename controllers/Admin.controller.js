@@ -7,6 +7,14 @@ const { listen } = require("express/lib/application");
 const messages = require('../common/common_messages/return_messages')
 const common_methods = require('../common/common_methods/common_methods')
 
+const Admins = async (req,res) => {
+  try {
+    const admins = await Admin;
+    res.status(200).json(admins);
+  } catch (error) {
+    res.status(404).json("no Admin");
+  }
+}
 
 const oneAdmin  = async (req, res) => {
   try {
