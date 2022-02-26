@@ -4,7 +4,7 @@ const Session = require('../models/Session.model')
 const allSessions = async (req, res) => {
     try {
 
-        const sessions = await Session.find({belong: 'app'});
+        const sessions = await Session.find();
         res.status(200).json(sessions);
 
     } catch(err) {

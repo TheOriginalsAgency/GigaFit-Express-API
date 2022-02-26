@@ -9,7 +9,6 @@ const {
     userLogin, 
     adminLogin, 
     logOut, 
-    forgetPassword,
     updateProfile, 
     getAllExistingUsers } = require('../controllers/User.controller');
 const router = express.Router();
@@ -17,7 +16,7 @@ const router = express.Router();
 router.post('/user/registration', userRegistration);
 router.post('/user/login', userLogin);
 router.post('/user/admin-login', adminLogin)
-router.post('/user/forgotPassword/:email', forgetPassword)
+
 router.get('/user/oneUser/:email', oneUser);
 router.put('/user/updatePicture/:id', updatePicture)
 router.put('/user/updateTarget/:id/:arg', updateTarget)
