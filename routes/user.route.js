@@ -1,5 +1,6 @@
 const express = require('express');
 const {
+    Users,
     getCountUsersByMonth,
     oneUser, 
     updatePicture, 
@@ -13,6 +14,8 @@ const {
     getAllExistingUsers } = require('../controllers/User.controller');
 const router = express.Router();
 
+
+router.get('/allusers', Users);
 router.post('/user/registration', userRegistration);
 router.post('/user/login', userLogin);
 router.post('/user/admin-login', adminLogin)
