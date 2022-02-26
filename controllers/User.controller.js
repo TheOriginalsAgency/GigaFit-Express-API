@@ -9,6 +9,16 @@ const common_methods = require('../common/common_methods/common_methods')
 
 let globalToken;
 
+const Users = async (req,res) => {
+  try {
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json("no User");
+  }
+}
+
+
 const oneUser  = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.params.email });
@@ -348,6 +358,7 @@ const getAllExistingUsers = async (req, res) => {
 }
 
   module.exports = { 
+    Users,
     oneUser, 
     updatePicture, 
     userRegistration, 
