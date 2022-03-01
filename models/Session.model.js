@@ -10,7 +10,7 @@ const SessionSchema = mongoose.Schema(
         picture: {
             type: String,
             required: true,
-            default: 'defaultProgram.png'
+            default: 'defaultSession.jpeg'
         },
         programs: {
             type: Array,
