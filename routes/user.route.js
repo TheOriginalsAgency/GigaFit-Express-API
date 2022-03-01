@@ -10,7 +10,7 @@ const {
     userLogin, 
     adminLogin, 
     logOut, 
-    updateProfile, 
+    updateDateBirth, 
     getAllExistingUsers } = require('../controllers/User.controller');
 const router = express.Router();
 
@@ -25,7 +25,7 @@ router.put('/user/updatePicture/:id', updatePicture)
 router.put('/user/updateTarget/:id/:arg', updateTarget)
 router.put('/user/updatePassword/:id/:oldPassword', updatePassword)
 router.get('/user/logOut', logOut);
-router.put('/user/update/:id', updateProfile)
+router.put('/user/update/:id', updateDateBirth)
 router.get('/users/getDailyLogs', getCountUsersByMonth)
 router.get('/UsersNum', getAllExistingUsers)
 

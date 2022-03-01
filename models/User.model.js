@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const mongoose = require("mongoose");
 
 
@@ -47,6 +48,18 @@ const UserSchema = new mongoose.Schema(
     city: {
       type: String,
       max: 50,
+    },
+    weight: {
+      type: Number,
+      default : 0
+    },
+    height: {
+      type: Number,
+      default : 0
+    },
+    imc: {
+      type: String,
+      default : ''
     },
     clubs: {
       type: Array,

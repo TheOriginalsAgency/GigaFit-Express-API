@@ -19,7 +19,7 @@ const RegisterValidation = data =>{
         tel: Joi.string()
                 .required(),
         password: Joi.string()
-                    .pattern(new RegExp('^[a-zA-Z0-9]{8,30}$'))
+                    .pattern(new RegExp('^[a-zA-Z0-9_\.\-\@]{8,30}$'))
                     .min(8)
                     .required(),
         confirmPassword: Joi.ref('password'),
@@ -34,10 +34,10 @@ const RegisterValidation = data =>{
 const LoginValidation = data=>{
     const schema = Joi.object({
         email: Joi.string()
-                .pattern(new RegExp('^[a-zA-Z0-9_\-]+@([a-zA-Z0-9_\-]{4,6})\.([a-zA-Z]{2,3})$'))
+                .pattern(new RegExp('^[a-zA-Z0-9_\.\-]+@([a-zA-Z0-9_\-]{4,6})\.([a-zA-Z]{2,3})$'))
                 .required(),
         password: Joi.string()
-                        .pattern(new RegExp('^[a-zA-Z0-9]{8,30}$'))
+                        .pattern(new RegExp('^[a-zA-Z0-9_\.\-\@]{8,30}$'))
                         .min(8)
                         .required(),
     });
