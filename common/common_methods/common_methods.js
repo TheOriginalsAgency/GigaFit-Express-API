@@ -48,25 +48,22 @@ function sendMail(receiver, newPassword) {
             <title>Document</title>
             <style>
                 div{
-                    width: 50%;
-                    height: 100px;
                     font-style: oblique;
                     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
                     font-weight: 500;
-                    background-color: black;
+                    background-color: white;
                     border-radius: 8px;
         
                 }
                 h1{
-                    width: 100%;
                     color: #7DA66A;
                 }
                 hr{
                     width: 100px;
-                   color: white;
+                   color: black;
                 }
                 b{
-                    color: white;
+                    color: black;
                 }
             </style>
         </head>

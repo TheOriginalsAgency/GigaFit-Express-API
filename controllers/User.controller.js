@@ -284,6 +284,19 @@ const updateDateBirth = async (req, res) => {
 
 }
 
+// delete Admin
+const deleteUser = async (req, res) => {
+  const targetedUser = await User.findOne({ _id: req.params.id });
+  try {
+      if(targetedUser) {
+          const user = await targetedUser.deleteOne();
+          res.status(200).json(user);
+      }
+  } catch(err) {
+      res.status(500).json(err);
+  }
+}
+
 const getCountUsersByMonth = async (req, res) => {
 
   //const allMaleLogInByDay = await Logger.count({ gender: 'Male',$group: 'dateLog'});
@@ -346,16 +359,17 @@ const getAllExistingUsers = async (req, res) => {
 
   module.exports = { 
     Users,
-    oneUser, 
-    updatePicture, 
-    userRegistration, 
-    userLogin, 
-    adminLogin, 
-    logOut, 
-    forgetPassword, 
-    updateDateBirth, 
+    oneUser,
+    updatePicture,
+    userRegistration,
+    userLogin,
+    adminLogin,
+    logOut,
+    forgetPassword,
+    updateDateBirth,
     updateTarget, 
     updatePassword,
     getCountUsersByMonth,
-    getAllExistingUsers
+    getAllExistingUsers,
+    deleteUser
   };

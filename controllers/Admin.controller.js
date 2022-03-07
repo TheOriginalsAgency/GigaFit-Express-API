@@ -60,11 +60,25 @@ const AdminRegistration = async (req, res) => {
     }
   }
 
+// delete Admin
+const deleteAdmin = async (req, res) => {
+  const targetedAdmin = await Admin.findOne({ _id: req.params.id });
+  try {
+      if(targetedAdmin) {
+          const admin = await targetedAdmin.deleteOne();
+          res.status(200).json(admin);
+      }
+  } catch(err) {
+      res.status(500).json(err);
+  }
+}
+
 
 
 
     module.exports = { 
         oneAdmin,
         AdminRegistration,
-        Admins
+        Admins,
+        deleteAdmin
     };
