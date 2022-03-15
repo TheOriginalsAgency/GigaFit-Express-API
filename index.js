@@ -118,7 +118,7 @@ app.post("/api/postSession", uploadSessions.single("file"), (req, res) => {
   }
 });
 
-
+//Upload session image
 app.post("/api/uploadSession/:nameFile", uploadSessions.single("file"), (req, res) => {
   try {
     fs.unlinkSync(`public/images/sessions/${req.params.nameFile}`);
@@ -138,18 +138,17 @@ const storageUsers = multer.diskStorage({
   },
 });
 
+
+
 const uploadUsers = multer({ storage: storageUsers });
-
-
 app.post("/api/updateUser/:nameFile", uploadUsers.single("file"), (req, res) => {
   try {
     if (req.params.nameFile === 'noAvatar.png') {
-    return res.status(200).json("Users File updated successfully");
+      return res.status(200).json("Users File updated successfully");
     } else {
       fs.unlinkSync(`public/images/users/${req.params.nameFile}`);
     return res.status(200).json("Users File updated successfully");
-    }
-    
+    } 
   } catch (error) {
     console.error('UploadUser ERROR !!'+ error);
   }

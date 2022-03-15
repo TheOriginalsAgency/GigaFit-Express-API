@@ -60,7 +60,7 @@ const AdminRegistration = async (req, res) => {
     }
   }
 
-
+    
 
 
     module.exports = { 
