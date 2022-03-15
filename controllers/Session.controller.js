@@ -49,11 +49,9 @@ const updateSession = async (req, res) => {
             const session = await targetedSession.updateOne({ $set: req.body });
               res.status(200).json(session);
         }
-        
       } catch (err) {
         res.status(500).json(err);
       }
-    
 }
 
 // delete Program
