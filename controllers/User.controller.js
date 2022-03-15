@@ -73,10 +73,10 @@ const userRegistration = async (req, res) => {
 
         const user = await User.findOne({ email: req.body.email });
         console.log(user);
-        if(!user) return res.status(404).json('Cet Email n\'existe pas')
+        if(!user) return res.status(404).json('L\'E-mail que vous avez saisi est incorrect. Réessayez')
         
         const validPassword = await bcrypt.compare(req.body.password, user.password)
-        if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
+        if(!validPassword) return res.status(400).json('Mot de passe incorrect. Réessayez')
     
         const token = jwt.sign({user}, process.env.SECRET_KEY);
         console.log(token);

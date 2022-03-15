@@ -17,7 +17,25 @@ const ClubSchema = new mongoose.Schema(
         picture: {
             type: String,
             default: ""
-        }
+        },
+        adresse: {
+            type: String,
+        },
+        facebook: {
+            type: String,
+        },
+        instagram: {
+            type: String,
+        },
+        siteWeb: {
+            type: String,
+        },
+        tel: {
+            type: String,
+        },
+        email: {
+            type: String,
+        },
     },
     { 
         timestamps: true,
