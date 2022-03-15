@@ -35,11 +35,18 @@ const LoginValidation = data=>{
     const schema = Joi.object({
         email: Joi.string()
                 .pattern(new RegExp('^[a-zA-Z0-9_\.\-]+@([a-zA-Z0-9_\-]{4,6})\.([a-zA-Z]{2,3})$'))
-                .required(),
+                .required()
+                .messages({
+                        'string.empty': `Veuillez Remplir les Champs`,
+                      }),
         password: Joi.string()
                         .pattern(new RegExp('^[a-zA-Z0-9_\.\-\@]{8,30}$'))
                         .min(8)
-                        .required(),
+                        .required()
+                        .messages({
+                                'string.empty': `Veuillez Remplir les Champs`,
+                                'string.min': `le Mot de Passe doit inclue 8 caractéres`,
+                              }),
     });
     return schema.validate(data);
 };

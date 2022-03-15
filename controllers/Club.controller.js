@@ -38,15 +38,18 @@ const allClubs = async (req, res) => {
 
 const updateClub = async (req, res) => {
   try {
-    const club = await Club.findById(req.params.id);
+    const club = await Club.findOne({ _id: req.params.id });
+    console.log("Targeted Club " + club);
     if (club) {
-      await Club.updateOne({ $set: req.body });
+      const updatedClub = await club.updateOne({ $set: req.body });
+      console.log(updatedClub);
       res.status(200).json("the Club has been updated");
     } else {
       res.status(403).json("Club can't be updated");
     }
   } catch (err) {
     res.status(500).json(err);
+    console.log("Club Error " + err);
   }
 }
 
