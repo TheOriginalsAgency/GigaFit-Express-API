@@ -58,7 +58,7 @@ app.use(globelmiddlewire)
 
 function globelmiddlewire (req,res,next) {
   var auth = req.headers['authorization']
-  if(req.url === '/api/user/login' || req.url === '/api/user/registration' || req.url === '/api/super-admin/login' || req.url === '/images') return next()
+  if(req.url === '/api/user/login' || req.url === '/api/user/registration' || req.url === '/api/super-admin/login') return next()
   const token = auth && auth.split(' ')[1]
   if(token == null) return res.sendStatus(401)
   jwt.verify(token, process.env.SECRET_KEY, (err,user) => {
