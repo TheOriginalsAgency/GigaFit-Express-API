@@ -43,6 +43,7 @@ const AdminRegistration = async (req, res) => {
         tel: req.body.tel,
         dateBirth: req.body.dateBirth,
         password: hashedPassword,
+        club: req.body.club
       });
       console.log(newAdmin);
 
@@ -66,5 +67,6 @@ const AdminRegistration = async (req, res) => {
     module.exports = { 
         oneAdmin,
         AdminRegistration,
-        Admins
+        Admins,
+        deleteAdmin
     };

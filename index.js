@@ -16,6 +16,7 @@ const superAdminFunctions = require('./routes/superAdmin.route')
 const programHistoryFunctions = require('./routes/history.route')
 const resamaniaGigaFunctions = require('./routes/resamania.route')
 const notificationFunction = require('./routes/notification.route')
+const { forgetPassword } = require('./controllers/User.controller');
 const jwt = require('jsonwebtoken')
 
 var fs = require('fs');
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
-
+app.post('/user/forgotPassword/:email', forgetPassword)
 //middleware
 app.use(express.json({limit: '50mb'}));
 app.use(helmet());

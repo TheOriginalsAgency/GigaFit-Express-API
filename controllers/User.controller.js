@@ -101,6 +101,7 @@ const userRegistration = async (req, res) => {
 
       } catch (err) {
         res.status(500).json(err)
+        console.log("UserLogin Error "+err);
       }
   }
 
@@ -230,8 +231,11 @@ const updateTarget = async (req, res) => {
     }else if(arg == 'tel') {
       const update = { tel : req.body.tel };
       user = await User.findOneAndUpdate(filter, update)
-    }else if(arg == 'dateBirth') {
-      const update = { dateBirth : req.body.dateBirth };
+    }else if(arg == 'weight') {
+      const update = { weight : req.body.weight };
+      user = await User.findOneAndUpdate(filter, update)
+    }else if(arg == 'height') {
+      const update = { height : req.body.height };
       user = await User.findOneAndUpdate(filter, update)
     }
     
@@ -267,33 +271,30 @@ const updatePassword = async (req, res) => {
 
 }
 
-const updateProfile = async (req, res) => {
-  
-  const userProfile = await User.findOne({ uuid: req.params.id });
-  if (userProfile.uuid == req.params.id || userProfile.isAdmin) {
-    
+const updateDateBirth = async (req, res) => {
 
-    const validPassword = await bcrypt.compare(req.body.password, userProfile.password)
-        !validPassword && res.status(400).json("wrong password");
-
-    if (req.params.newPassword && req.params.newPassword == req.params.confirmNewPassword) {
-          try {
-            const salt = await bcrypt.genSalt(10);
-            req.body.password = await bcrypt.hash(req.params.newPassword, salt);
-          } catch (err) {
-            return res.status(500).json(err);
-          }
-        }
     try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
+      let user;
+      const filter = { _id: req.params.id };
+      const update = { dateBirth : req.body.dateBirth };
+      user = await User.findOneAndUpdate(filter, update)
       res.status(200).json(user);
     } catch (err) {
       return res.status(500).json(err);
     }
-  } else {
-    return res.status(403).json("You can update only your account!");
+
+}
+
+// delete Admin
+const deleteUser = async (req, res) => {
+  const targetedUser = await User.findOne({ _id: req.params.id });
+  try {
+      if(targetedUser) {
+          const user = await targetedUser.deleteOne();
+          res.status(200).json(user);
+      }
+  } catch(err) {
+      res.status(500).json(err);
   }
 }
 
@@ -359,16 +360,17 @@ const getAllExistingUsers = async (req, res) => {
 
   module.exports = { 
     Users,
-    oneUser, 
-    updatePicture, 
-    userRegistration, 
-    userLogin, 
-    adminLogin, 
-    logOut, 
-    forgetPassword, 
-    updateProfile, 
+    oneUser,
+    updatePicture,
+    userRegistration,
+    userLogin,
+    adminLogin,
+    logOut,
+    forgetPassword,
+    updateDateBirth,
     updateTarget, 
     updatePassword,
     getCountUsersByMonth,
-    getAllExistingUsers
+    getAllExistingUsers,
+    deleteUser
   };
