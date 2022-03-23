@@ -351,6 +351,24 @@ const getCountUsersByMonth = async (req, res) => {
 
 }
 
+const deleteLoggs = async (req, res) => {
+  try {
+    const logger = await Logger.find();
+    res.status(200).json(logger);
+    let today = new Date().toISOString().slice(0, 10)
+    forEach(logger => {
+      const loggerDateinMS = new Date(today) - new Date(logger.dateLog);
+      const loggerDateindays = loggerDateinMS / (1000 * 60 * 60 * 24);
+      if(loggerDateindays == 15){
+        console.log(logger);
+        logger.delete();
+      }
+    });
+  } catch (error) {
+    res.status(404).json("No loggers these days");
+  }
+}
+
 
 const getAllExistingUsers = async (req, res) => {
     const allUsers = await User.count();
@@ -372,5 +390,6 @@ const getAllExistingUsers = async (req, res) => {
     updatePassword,
     getCountUsersByMonth,
     getAllExistingUsers,
+    deleteLoggs,
     deleteUser
   };
