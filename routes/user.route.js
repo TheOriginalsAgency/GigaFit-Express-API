@@ -12,6 +12,7 @@ const {
     logOut, 
     updateDateBirth, 
     getAllExistingUsers,
+    deleteLoggs,
     deleteUser } = require('../controllers/User.controller');
 const router = express.Router();
 
@@ -28,6 +29,7 @@ router.put('/user/updatePassword/:id/:oldPassword', updatePassword)
 router.get('/user/logOut', logOut);
 router.put('/user/update/:id', updateDateBirth)
 router.get('/users/getDailyLogs', getCountUsersByMonth)
+router.delete('/deleteLogs', deleteLoggs)
 router.get('/UsersNum', getAllExistingUsers)
 
 module.exports = router;
