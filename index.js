@@ -175,7 +175,22 @@ app.post("/api/updateClubs/:nameFile",uploadClubs.single('file'), (req, res) => 
     return res.status(200).json("Program File uploded successfully");
 });
 
+// upload admins image
+const storageAdmin = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/admins");
+  },
+  filename: (req, file, cb) => {
+    console.log(req);
+    console.log(file.name);
+    cb(null, req.body.name);
+  },
+});
 
+const uploadAdmins = multer({ storage: storageAdmin });
+app.post("/api/imgAdmins",uploadAdmins.single('file'), (req, res) => {
+    return res.status(200).json("Program File uploded successfully");
+});
 
 //routes
 app.use('/api', userfunctions);

@@ -43,6 +43,7 @@ const AdminRegistration = async (req, res) => {
         tel: req.body.tel,
         dateBirth: req.body.dateBirth,
         password: hashedPassword,
+        profilePicture: req.body.profilePicture,
         club: req.body.club
       });
       console.log(newAdmin);
