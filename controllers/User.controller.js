@@ -226,7 +226,7 @@ const updateTarget = async (req, res) => {
       const update = { firstname : req.body.firstname };
       user = await User.findOneAndUpdate(filter, update)
     }else if(arg == 'email') {
-      const update = { firstname : req.body.firstname };
+      const update = { email : req.body.email };
       user = await User.findOneAndUpdate(filter, update)
     }else if(arg == 'tel') {
       const update = { tel : req.body.tel };
@@ -268,7 +268,6 @@ const updatePassword = async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
-
 }
 
 const updateDateBirth = async (req, res) => {
@@ -299,7 +298,6 @@ const deleteUser = async (req, res) => {
 }
 
 const getCountUsersByMonth = async (req, res) => {
-
   //const allMaleLogInByDay = await Logger.count({ gender: 'Male',$group: 'dateLog'});
   //const allFemaleLogInByDay = await Logger.count({ gender: 'Female',$group: 'dateLog'});
   //var all = allMaleLogInByDay + allFemaleLogInByDay;
@@ -351,19 +349,53 @@ const getCountUsersByMonth = async (req, res) => {
 
 }
 
+// const deleteLoggs = async (req, res) => {
+//   try {
+//     const logger = await Logger.find();
+//     let today = new Date().toISOString().slice(0, 10)
+//     forEach(logger => {
+//       const loggerDateinMS = new Date(today) - new Date(logger.dateLog);
+//       const loggerDateindays = loggerDateinMS / (1000 * 60 * 60 * 24);
+//       if(loggerDateindays >= 15){
+//         console.log(logger);
+//         logger.delete();
+//       }
+//       res.status(200).json(logger);
+//       console.log('----------------------- alikan -----------------------');
+//     });
+//   } catch (error) {
+//     res.status(404).json("No loggers these days");
+//   }
+// }
+
+// const deleteLoggs = async (req, res)=> {
+//   try {
+//     let today = new Date();
+//     let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+//     date.setDate(date.getDate() - 15);
+//     await Logger.where("dateLog").lt(date).deleteMany();
+//     res.status(404).json("No loggers these days");
+//   } catch (error) {
+//     res.status(404).json("No loggers these days");
+//   }
+// }
+
 const deleteLoggs = async (req, res) => {
   try {
     const logger = await Logger.find();
-    res.status(200).json(logger);
-    let today = new Date().toISOString().slice(0, 10)
-    forEach(logger => {
-      const loggerDateinMS = new Date(today) - new Date(logger.dateLog);
+    let today = new Date();
+    logger.forEach(e => {
+      const loggerDateinMS = today - e.createdAt;
+      // console.log(' date :'+new Date(e.createdAt)+' - '+ today + ' = ' + loggerDateinMS);
+      // console.log(loggerDateinMS);
       const loggerDateindays = loggerDateinMS / (1000 * 60 * 60 * 24);
-      if(loggerDateindays == 15){
-        console.log(logger);
-        logger.delete();
+      console.log(loggerDateindays);
+      if(loggerDateindays >= 15){
+        // console.log(e);
+        e.delete();
       }
     });
+    res.status(200).json('done');
   } catch (error) {
     res.status(404).json("No loggers these days");
   }
