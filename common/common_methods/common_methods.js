@@ -19,10 +19,13 @@ function generateRandomPassword() {
 function sendMail(receiver, newPassword) {
 
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        pool: true,
+        host: 'smtp.ionos.fr',
+        port: 465,
+        secure: true, 
         auth: {
-            user: 'mohamedbettaoui.1@gmail.com',
-            pass: 'cthvzmxnvdqknrqu',
+            user: 'app@gigafit.fr',
+            pass: '&pp11i@glglaflt',
         },
     });
 
@@ -32,7 +35,7 @@ function sendMail(receiver, newPassword) {
     }));
 
     var mailOptions = {
-        from: 'noreplay@gigafit.fr',
+        from: 'noreply@gigafit.fr',
         to: receiver,
         cc: receiver,
         bcc: receiver,
@@ -52,15 +55,7 @@ function sendMail(receiver, newPassword) {
                     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
                     font-weight: 500;
                     background-color: white;
-                    border-radius: 8px;
         
-                }
-                h1{
-                    color: #7DA66A;
-                }
-                hr{
-                    width: 100px;
-                   color: black;
                 }
                 b{
                     color: black;
@@ -70,9 +65,7 @@ function sendMail(receiver, newPassword) {
           <body>
           <div>
             <h1><b>Bonjour</b> Cher Utilisateur, voici votre mot de passe regénérer: </h1></br>
-            <hr>
                 <b>${newPassword}</b>
-            <hr>
           </div>
           </body>
         </html>`,

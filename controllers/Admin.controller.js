@@ -29,7 +29,6 @@ const oneAdmin  = async (req, res) => {
 
 const AdminRegistration = async (req, res) => {
     try {
-
       const salt = await bcrypt.genSalt(10);
       //generate new password
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
