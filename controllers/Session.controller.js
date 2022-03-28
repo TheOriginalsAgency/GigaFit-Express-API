@@ -44,6 +44,7 @@ const addSession = async (req, res) => {
 // Update Program
 const updateSession = async (req, res) => {
     const targetedSession = await Session.findOne({ _id: req.params.id });
+    console.log(targetedSession);
     try {
         if(targetedSession) {
             const session = await targetedSession.updateOne({ $set: req.body });
@@ -51,19 +52,23 @@ const updateSession = async (req, res) => {
         }
       } catch (err) {
         res.status(500).json(err);
+
       }
 }
 
 // delete Program
 const deleteSession = async (req, res) => {
     const targetedSession = await Session.findOne({ uuid: req.params.id });
+    console.log(targetedSession);
     try {
         if(targetedSession) {
             const session = await targetedSession.deleteOne();
-            res.status(500).json(session);
+            console.log(session);
+            res.status(200).json(session);
         }
     } catch(err) {
-        res.status(500).json(err);
+        // res.status(500).json(err);
+        console.log(targetedSession);
     }
 }
 
