@@ -77,7 +77,6 @@ const superAdminRegistration = async (req, res) => {
             validPassword = await bcrypt.compare(req.body.password, admin.password)
             if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
             token = jwt.sign({admin}, process.env.SECRET_KEY);
-
         }
         
         console.log(token);
