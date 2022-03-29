@@ -45,12 +45,9 @@ const addNotif = async (req,res)=> {
 
         let message = {
             to: '/topics/all',
-            notification: {
-                title: req.body.clubname,
-                body: req.body.discription,
-                sound: 'default',
-                'click_action': 'FCM_PLUGIN_ACTIVITY',
-                'icon': 'fcm_push_icon',
+            data: {
+                'title': req.body.clubname,
+                'body': req.body.discription,
             }
         }
         fcm.send(message, async (err, response) => {
@@ -58,8 +55,7 @@ const addNotif = async (req,res)=> {
                 next(err)
             }else {
                 const Notif = await newNotif.save();
-                res.status(200).send(Notif);
-                console.log(response);
+                res.status(200).send({Notif, response});
             }
         })
         
