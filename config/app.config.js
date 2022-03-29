@@ -9,7 +9,10 @@ const resa_credentials = {
     grant_type: "client_credentials"
 }
 
+const SERVER_KEY = 'AAAALOmQfbM:APA91bEZCmV7vZR0490QBP1fn340tTq-Gs4f1G-e_YZbg94V530YzkODJ6RSKB-Qj5RPUSfwpjfb0AwM1e1bvWub0bsd4wPip1XcgQHhDSwxZvuDUuniw42xoWBrjrHaAXJMIoGFxUec';
+
 module.exports = {
     ONE_SIGNAL_CONFIG,
-    resa_credentials
+    resa_credentials,
+    SERVER_KEY
 }

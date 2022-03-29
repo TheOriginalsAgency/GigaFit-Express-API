@@ -1,5 +1,7 @@
 
 const Notification = require('../models/Notifiction.model');
+var FCM = require('fcm-node');
+const {SERVER_KEY} = require('../config/app.config')
 
 
 // all Notifications
@@ -39,8 +41,28 @@ const oneNotif = async (req,res) => {
 const addNotif = async (req,res)=> {
     try {
         const newNotif = new Notification(req.body);
-        const Notif = await newNotif.save();
-        res.status(200).send(Notif);
+        let fcm = new FCM(SERVER_KEY);
+
+        let message = {
+            to: '/topics/all',
+            notification: {
+                title: req.body.clubname,
+                body: req.body.discription,
+                sound: 'default',
+                'click_action': 'FCM_PLUGIN_ACTIVITY',
+                'icon': 'fcm_push_icon',
+            }
+        }
+        fcm.send(message, async (err, response) => {
+            if(err) {
+                next(err)
+            }else {
+                const Notif = await newNotif.save();
+                res.status(200).send(Notif);
+                console.log(response);
+            }
+        })
+        
     } catch (err) {
         res.status(500).json(err);
         console.log('Error :' + err);
