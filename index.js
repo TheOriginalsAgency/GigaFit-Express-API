@@ -16,6 +16,8 @@ const superAdminFunctions = require("./routes/superAdmin.route");
 const programHistoryFunctions = require("./routes/history.route");
 const resamaniaGigaFunctions = require("./routes/resamania.route");
 const notificationFunction = require("./routes/notification.route");
+const courseFunctions = require('./routes/course.route')
+const eventFunctions = require('./routes/event.route')
 const { forgetPassword } = require("./controllers/User.controller");
 const jwt = require("jsonwebtoken");
 
@@ -222,6 +224,8 @@ app.use("/api", superAdminFunctions);
 app.use("/api", programHistoryFunctions);
 app.use("/api", resamaniaGigaFunctions);
 app.use("/api", notificationFunction);
+app.use("/api", courseFunctions);
+app.use("/api", eventFunctions);
 
 app.listen(process.env.PORT, () => {
   console.log(`Backend API server is running on port ${process.env.PORT} !`);
