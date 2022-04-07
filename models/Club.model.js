@@ -36,6 +36,12 @@ const ClubSchema = new mongoose.Schema(
         email: {
             type: String,
         },
+        studios: {
+            type: Array,
+        },
+        coaches: {
+            type: Array,
+        }
     },
     { 
         timestamps: true,
