@@ -13,6 +13,19 @@ const allEventsByClub = async (req, res) => {
     }
 }
 
+const getEventByDate = async (req, res) => {
+    try {
+        const events = await Event.find({
+            clubId: req.params.id,
+            dateBegin: { $gte: new Date(req.params.dateFrom), $lte: new Date(req.params.dateTo)}
+        });
+        res.status(200).json(events);
+        
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 
 // Add new Event
 const addEvent = async (req, res) => {
@@ -63,5 +76,6 @@ module.exports = {
     allEventsByClub,
     addEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    getEventByDate
 }

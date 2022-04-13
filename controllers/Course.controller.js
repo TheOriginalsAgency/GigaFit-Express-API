@@ -4,7 +4,7 @@ const Course = require('../models/course.model')
 const allCourses = async (req, res) => {
     try {
 
-        const courses = await Course.find();
+        const courses = await Course.find({ club: req.params.id });
         res.status(200).json(courses);
 
     } catch(err) {
