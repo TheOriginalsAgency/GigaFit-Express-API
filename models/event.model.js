@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema(
     {
+        title: {
+            type: String,
+            required: true
+        },
         clubId: {
             type: String,
             required: true
@@ -26,7 +30,15 @@ const EventSchema = new mongoose.Schema(
         dateBegin: {
             type: Date,
         },
-
+        dateEnd: {
+            type: Date,
+        },
+        salle: {
+            type: String,
+        },
+        coach: {
+            type: String,
+        }
     },
     { 
         timestamps: true,

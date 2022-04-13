@@ -3,7 +3,7 @@ const { allCourses, addCourse, oneCourse, updateCourse, deleteCourse } = require
 const router = express.Router()
 
 // Program Crud
-router.get('/Courses', allCourses)
+router.get('/Courses/:id', allCourses)
 router.get('/oneCourse/:id', oneCourse)
 router.post('/course/addnew', addCourse)
 router.put('/course/update/:id', updateCourse)

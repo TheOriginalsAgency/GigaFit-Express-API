@@ -142,6 +142,40 @@ app.post(
   }
 );
 
+//images Courses uploads
+const storageCourses = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/courses");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const uploadCourses = multer({ storage: storageCourses });
+
+app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("Course File uploded successfully");
+  } catch (error) {
+    console.error("UploadCourse ERROR !!" + error);
+  }
+});
+
+//Upload Course image
+app.post(
+  "/api/uploadCourse/:nameFile",
+  uploadCourses.single("file"),
+  (req, res) => {
+    try {
+      fs.unlinkSync(`public/images/courses/${req.params.nameFile}`);
+      return res.status(200).json("Session File updated successfully");
+    } catch (error) {
+      console.error("UploadSession ERROR !!" + error);
+    }
+  }
+);
+
 //images Users uploads
 const storageUsers = multer.diskStorage({
   destination: (req, file, cb) => {
