@@ -15,12 +15,11 @@ const allCourses = async (req, res) => {
 
 // Get One Program
 const oneCourse = async (req, res) => {
-    const course = await Course.findOne({ _id: req.params.id });
-    try {
 
-        if (course) {
+    try {
+        const course = await Course.findOne({ _id: req.params.id });
+            console.log(course);
             res.status(200).send(course);
-        } 
 
     } catch(err) {
         res.status(500).json(err);

@@ -18,6 +18,7 @@ const resamaniaGigaFunctions = require("./routes/resamania.route");
 const notificationFunction = require("./routes/notification.route");
 const courseFunctions = require('./routes/course.route')
 const eventFunctions = require('./routes/event.route')
+const reservationFunctions = require('./routes/reservation.route')
 const { forgetPassword } = require("./controllers/User.controller");
 const jwt = require("jsonwebtoken");
 
@@ -260,6 +261,7 @@ app.use("/api", resamaniaGigaFunctions);
 app.use("/api", notificationFunction);
 app.use("/api", courseFunctions);
 app.use("/api", eventFunctions);
+app.use("/api", reservationFunctions);
 
 app.listen(process.env.PORT, () => {
   console.log(`Backend API server is running on port ${process.env.PORT} !`);
