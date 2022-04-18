@@ -41,9 +41,12 @@ const ClubSchema = new mongoose.Schema(
         },
         coaches: {
             type: Array,
+        },
+        invitMsg: {
+            type: String,
         }
     },
-    { 
+    {
         timestamps: true,
         versionKey: false
     }
