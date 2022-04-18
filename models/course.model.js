@@ -23,12 +23,9 @@ const CourseSchema = new mongoose.Schema(
         desc: {
             type: String,
         },
-<<<<<<< HEAD
-=======
         club: {
             type: String,
         },
->>>>>>> 9fbea6eadcb6333e57a437ccbe6682848e9716c5
     },
     { 
         timestamps: true,
