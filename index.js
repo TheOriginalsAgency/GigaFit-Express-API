@@ -143,27 +143,31 @@ app.post(
   }
 );
 
+
+
+
+
+// app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
+//   try {
+//     return res.status(200).json("Course File uploded successfully");
+//   } catch (error) {
+//     console.error("UploadCourse ERROR !!" + error);
+//   }
+// });
+
+
 //images Courses uploads
 const storageCourses = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images/courses");
   },
   filename: (req, file, cb) => {
+    console.log(req);
     cb(null, req.body.name);
   },
 });
-
-const uploadCourses = multer({ storage: storageCourses });
-
-app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("Course File uploded successfully");
-  } catch (error) {
-    console.error("UploadCourse ERROR !!" + error);
-  }
-});
-
 //Upload Course image
+const uploadCourses = multer({ storage: storageCourses });
 app.post(
   "/api/uploadCourse/:nameFile",
   uploadCourses.single("file"),
@@ -183,6 +187,7 @@ const storageUsers = multer.diskStorage({
     cb(null, "public/images/users");
   },
   filename: (req, file, cb) => {
+    console.log(req);
     cb(null, req.body.name);
   },
 });
