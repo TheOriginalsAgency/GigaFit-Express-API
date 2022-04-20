@@ -18,7 +18,6 @@ const oneCourse = async (req, res) => {
 
     try {
         const course = await Course.findOne({ _id: req.params.id });
-            console.log(course);
             res.status(200).send(course);
 
     } catch(err) {

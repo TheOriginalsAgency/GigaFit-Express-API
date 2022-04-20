@@ -17,15 +17,19 @@ const allReservationByUser = async (req, res) => {
 const EventIsReserved = async (req, res) => {
     try {
 
-        const reservations = await Reservation.findOne({userId: req.params.id});
-        const eventList = reservations.eventIds;
-        for(var i = 0; i < eventList.length; i++) {
-            if(eventList[i] == req.params.eventId){
-                res.status(200).json("exist");
-            }else {
-                res.status(200).json("not exist");
+        const reservation = await Reservation.findOne({userId: req.params.id});
+        var result = 'not exist';
+        if(reservation) {
+            const eventList = reservation.eventIds;
+            for(var i = 0; i < eventList.length; i++) {
+                if(eventList[i] == req.params.eventId){
+                    result = 'exist';
+                }
             }
         }
+        
+        res.status(200).json(result);
+
 
     } catch(err) {
         res.status(500).json(err);
@@ -60,16 +64,20 @@ const addReservation = async (req, res) => {
 
 // Annuler Reservation
 const annulerReservation = async (req, res) => {
-    const targetedRes = await Reservation.findOne({ userId: req.params.id });
-    console.log(targetedRes);
     try {
-        if(targetedRes) {
-            const res = await targetedRes.updateOne({ $set: req.body });
-              res.status(200).json(res);
+        const resExist = await Reservation.findOne({ userId: req.params.userId });
+        console.log('Hjjjj'+ resExist);
+        if(resExist){
+            console.log('BBBhh'+ resExist);
+            const result = await resExist.updateOne({ $pull: { eventIds: req.params.eventId}});
+            console.log(result);
+            res.status(200).json(result);
         }
-      } catch (err) {
+
+    } catch(err) {
         res.status(500).json(err);
-      }
+        console.log('My => '+ err);
+    }
 }
 
 
