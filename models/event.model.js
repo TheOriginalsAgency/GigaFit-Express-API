@@ -6,6 +6,9 @@ const EventSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        img: {
+            type: String
+        },
         clubId: {
             type: String,
             required: true

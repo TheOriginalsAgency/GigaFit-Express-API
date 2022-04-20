@@ -9,7 +9,6 @@ const allEventsByClub = async (req, res) => {
 
     } catch(err) {
         res.status(500).json(err);
-        console.log('My error !!! ' + err);
     }
 }
 
@@ -19,7 +18,6 @@ const getEventByDate = async (req, res) => {
             clubId: req.params.id,
             dateBegin: { $gte: new Date(req.params.dateFrom), $lte: new Date(req.params.dateTo)}
         });
-        console.log(events);
         res.status(200).json(events);
         
     } catch (err) {
