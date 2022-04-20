@@ -53,23 +53,51 @@ const updateEvent = async (req, res) => {
         }
       } catch (err) {
         res.status(500).json(err);
-
       }
 }
 
 // delete Event
-const deleteEvent = async (req, res) => {
-    const targetedEvent = await Event.findOne({ uuid: req.params.id });
-    console.log(targetedEvent);
+// const deleteEvent = async (req, res) => {
+//     console.log(req.params.id);
+//     const targetedEvent = await Event.findOne({ uuid: req.params.id });
+//     console.log(targetedEvent);
+//     try {
+//         if(targetedEvent) {
+//             console.log(targetedEvent);
+//             const event = await targetedEvent.deleteOne();
+//             console.log(event);
+//             res.status(200).json(event);
+//         }
+//     } catch(err) {
+//         res.status(500).json(err);
+//         console.log(err);
+//     }
+// }
+
+const delet = async (req,res) => {
+    // const t = await Event.findOne({id:req.params.id}).deleteOne();
+    // res.status(200).json(req.params);
+    // try {
+    //     if (t) {
+    //         const e = await t.deleteOne();
+    //         res.status(200).json(e);
+    //     }
+    //     await t.find;
+    // } catch (error) {
+    //     res.status(500).json(error)
+    // }
     try {
-        if(targetedEvent) {
-            const event = await targetedEvent.deleteOne();
-            console.log(event);
-            res.status(200).json(event);
-        }
-    } catch(err) {
-        res.status(500).json(err);
-        console.log(err);
+        Event.findByIdAndDelete(req.params.id, function (err, docs) {
+            if (err){
+                console.log("is not "+err)
+            }
+            else{
+                console.log("Deleted : ", docs);
+                res.status(200).json(docs);
+            }
+        });
+    } catch (error) {
+        res.status(500).json(error)
     }
 }
 
@@ -77,6 +105,6 @@ module.exports = {
     allEventsByClub,
     addEvent,
     updateEvent,
-    deleteEvent,
+    delet,
     getEventByDate
 }
