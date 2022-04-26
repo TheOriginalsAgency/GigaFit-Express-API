@@ -12,6 +12,17 @@ const allEventsByClub = async (req, res) => {
     }
 }
 
+const oneEventById = async (req, res) => {
+    try {
+
+        const event = await Event.findOne({_id: req.params.id});
+        res.status(200).json(event);
+
+    } catch(err) {
+        res.status(500).json(err);
+    }
+}
+
 const getEventByDate = async (req, res) => {
     try {
         const events = await Event.find({
@@ -104,5 +115,6 @@ module.exports = {
     addEvent,
     updateEvent,
     delet,
-    getEventByDate
+    getEventByDate,
+    oneEventById
 }

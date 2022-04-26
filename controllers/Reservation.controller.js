@@ -4,8 +4,8 @@ const Reservation = require('../models/Reservation.model')
 const allReservationByUser = async (req, res) => {
     try {
 
-        const reservations = await Reservation.find({userId: req.params.id});
-        res.status(200).json(reservations);
+        const reservation = await Reservation.findOne({userId: req.params.id});
+        res.status(200).json(reservation);
 
     } catch(err) {
         res.status(500).json(err);
