@@ -67,10 +67,17 @@ const deleteClub = async (req, res) => {
   }
 }
 
+const getCountAll = async (req, res) => {
+  const allclubCount = await Club.count();
+  res.json(allclubCount);
+  console.log(allclubCount);
+}
+
 module.exports = {
     addClub,
     oneClub,
     allClubs,
     updateClub,
-    deleteClub
+    deleteClub,
+    getCountAll
 }
