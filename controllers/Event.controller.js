@@ -83,7 +83,7 @@ const updateEvent = async (req, res) => {
 //     }
 // }
 
-const delet = async (req,res) => {
+const delet = (req,res) => {
     // const t = await Event.findOne({id:req.params.id}).deleteOne();
     // res.status(200).json(req.params);
     // try {
