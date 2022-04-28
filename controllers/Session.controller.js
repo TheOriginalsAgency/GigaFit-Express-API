@@ -58,17 +58,20 @@ const updateSession = async (req, res) => {
 
 // delete Program
 const deleteSession = async (req, res) => {
-    const targetedSession = await Session.findOne({ uuid: req.params.id });
-    console.log(targetedSession);
+
     try {
-        if(targetedSession) {
-            const session = await targetedSession.deleteOne();
-            console.log(session);
-            res.status(200).json(session);
-        }
+
+            Session.findByIdAndDelete(req.params.id, function (err, docs) {
+                if (err){
+                    console.log("is not "+err)
+                }
+                else{
+                    console.log("Deleted : ", docs);
+                    res.status(200).json(docs);
+                }
+            });
     } catch(err) {
-        // res.status(500).json(err);
-        console.log(targetedSession);
+        res.status(500).json(err);
     }
 }
 

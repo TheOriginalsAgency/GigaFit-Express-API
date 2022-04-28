@@ -12,6 +12,17 @@ const allEventsByClub = async (req, res) => {
     }
 }
 
+const oneEventById = async (req, res) => {
+    try {
+
+        const event = await Event.findOne({_id: req.params.id});
+        res.status(200).json(event);
+
+    } catch(err) {
+        res.status(500).json(err);
+    }
+}
+
 const getEventByDate = async (req, res) => {
     try {
         const events = await Event.find({
@@ -72,7 +83,7 @@ const updateEvent = async (req, res) => {
 //     }
 // }
 
-const delet = async (req,res) => {
+const delet = (req,res) => {
     // const t = await Event.findOne({id:req.params.id}).deleteOne();
     // res.status(200).json(req.params);
     // try {
@@ -104,5 +115,6 @@ module.exports = {
     addEvent,
     updateEvent,
     delet,
-    getEventByDate
+    getEventByDate,
+    oneEventById
 }
