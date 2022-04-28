@@ -1,6 +1,17 @@
 const Reservation = require('../models/Reservation.model')
 
-// Get All Events
+// Get All Reservation 
+const allReservation = async (req, res) => {
+    try {
+
+        const reservations = await Reservation.find();
+        res.status(200).json(reservations);
+
+    } catch(err) {
+        res.status(500).json(err);
+    }
+}
+// Get All Reservation By User
 const allReservationByUser = async (req, res) => {
     try {
 
@@ -12,7 +23,7 @@ const allReservationByUser = async (req, res) => {
     }
 }
 
-// Get All Events
+// Check Event is Reserved or not
 const EventIsReserved = async (req, res) => {
     try {
 
@@ -85,5 +96,6 @@ module.exports = {
     allReservationByUser,
     addReservation,
     annulerReservation,
-    EventIsReserved
+    EventIsReserved,
+    allReservation
 }

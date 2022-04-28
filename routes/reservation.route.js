@@ -1,8 +1,9 @@
 const express = require('express');
-const { allReservationByUser, addReservation, annulerReservation, EventIsReserved } = require('../controllers/Reservation.controller')
+const { allReservationByUser, addReservation, annulerReservation, EventIsReserved, allReservation } = require('../controllers/Reservation.controller')
 const router = express.Router()
 
-// Program Crud
+// Reservation Methods
+router.get('/Reservations', allReservation);
 router.get('/Reservation/:id', allReservationByUser)
 router.get('/isResrvationExist/:id/:eventId', EventIsReserved)
 router.post('/Reservation/addnew', addReservation)
