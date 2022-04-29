@@ -115,11 +115,8 @@ module.exports = {
     addReservation,
     annulerReservation,
     EventIsReserved,
-<<<<<<< HEAD
     allReservation,
-    allReservationByEvent
-=======
+    allReservationByEvent,
     countallReservation,
     allReservation
->>>>>>> 8e760bd7e233c5a3430e86ec7ea2d9d27b184d7f
 }

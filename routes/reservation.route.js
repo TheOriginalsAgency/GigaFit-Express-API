@@ -1,9 +1,5 @@
 const express = require('express');
-<<<<<<< HEAD
-const { allReservationByUser, addReservation, annulerReservation, EventIsReserved, allReservation, allReservationByEvent } = require('../controllers/Reservation.controller')
-=======
-const { allReservationByUser, addReservation, annulerReservation, EventIsReserved, countallReservation ,allReservation } = require('../controllers/Reservation.controller')
->>>>>>> 8e760bd7e233c5a3430e86ec7ea2d9d27b184d7f
+const { allReservationByUser, addReservation, annulerReservation, EventIsReserved, allReservation, allReservationByEvent, countallReservation } = require('../controllers/Reservation.controller')
 const router = express.Router()
 
 // Reservation Methods
