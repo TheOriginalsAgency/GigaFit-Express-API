@@ -110,11 +110,17 @@ const delet = (req,res) => {
     }
 }
 
+const allevents = async (req,res) => {
+    const all = await Event.count();
+    res.status(200).json(all)
+}
+
 module.exports = {
     allEventsByClub,
     addEvent,
     updateEvent,
     delet,
     getEventByDate,
-    oneEventById
+    oneEventById,
+    allevents
 }

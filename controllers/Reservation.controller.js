@@ -101,6 +101,13 @@ const annulerReservation = async (req, res) => {
     }
 }
 
+//All Reservation
+const countallReservation = async (req , res) => {
+    const allresCount = await Reservation.count();
+    res.json(allresCount);
+    console.log(allresCount);
+}
+
 
 
 module.exports = {
@@ -108,6 +115,11 @@ module.exports = {
     addReservation,
     annulerReservation,
     EventIsReserved,
+<<<<<<< HEAD
     allReservation,
     allReservationByEvent
+=======
+    countallReservation,
+    allReservation
+>>>>>>> 8e760bd7e233c5a3430e86ec7ea2d9d27b184d7f
 }
