@@ -5,13 +5,14 @@ const {
     AdminLogin,
     VerifyToken, 
     Admins,
-    deleteAdmin} = require('../controllers/Admin.controller');
+    deleteAdmin,alladmin} = require('../controllers/Admin.controller');
 const router = express.Router();
 
 router.post('/admin/registration', AdminRegistration);
 router.get('/admin/data', oneAdmin);
 router.get('/admin/alladmin',Admins);
 router.delete('/deleteAdmin/:id', deleteAdmin);
+router.get('/alladmin', alladmin);
 
 
 

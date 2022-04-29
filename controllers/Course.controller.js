@@ -70,11 +70,17 @@ const deleteCourse = async (req, res) => {
     }
 }
 
+const allcourses = async (req ,res) => {
+    const all = await Course.count();
+    res.status(200).json(all);
+}
+
 
 module.exports = {
     allCourses,
     oneCourse,
     addCourse,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    allcourses
 }

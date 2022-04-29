@@ -74,10 +74,16 @@ const AdminRegistration = async (req, res) => {
     }
   }
 
+  const alladmin = async (req,res) => {
+    const alladmin = await Admin.count();
+    res.json(alladmin);
+  }
+
 
     module.exports = { 
         oneAdmin,
         AdminRegistration,
         Admins,
-        deleteAdmin
+        deleteAdmin,
+        alladmin
     };
