@@ -268,6 +268,8 @@ app.use("/api", courseFunctions);
 app.use("/api", eventFunctions);
 app.use("/api", reservationFunctions);
 
-app.listen(process.env.PORT, () => {
+const port = process.env.PORT || 2020;
+
+app.listen(port, () => {
   console.log(`Backend API server is running on port ${process.env.PORT} !`);
 });
