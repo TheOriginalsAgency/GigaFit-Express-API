@@ -7,6 +7,10 @@
   "author": "Mohammed-Amine Bettaoui",
   "license": "MIT",
   "private": true,
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
+  },
   "scripts": {
     "start": "node index.js"
   },
