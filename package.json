@@ -7,7 +7,7 @@
   "author": "Mohammed-Amine Bettaoui",
   "license": "MIT",
   "private": true,
-  "engines" : { 
+  "engines" : {
     "npm" : ">=7.0.0",
     "node" : ">=14.17.6"
   },
