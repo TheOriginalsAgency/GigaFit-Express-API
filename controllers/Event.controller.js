@@ -84,19 +84,26 @@ const updateEvent = async (req, res) => {
 // }
 
 const delet = (req,res) => {
-    // const t = await Event.findOne({id:req.params.id}).deleteOne();
-    // res.status(200).json(req.params);
-    // try {
-    //     if (t) {
-    //         const e = await t.deleteOne();
-    //         res.status(200).json(e);
-    //     }
-    //     await t.find;
-    // } catch (error) {
-    //     res.status(500).json(error)
-    // }
+
     try {
         Event.findByIdAndDelete(req.params.id, function (err, docs) {
+            if (err){
+                console.log("is not "+err)
+            }
+            else{
+                console.log("Deleted : ", docs);
+                res.status(200).json(docs);
+            }
+        });
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+const deleteEventBYCourseId = (req,res) => {
+
+    try {
+        Event.findByIdAndDelete({courseId:req.params.id}, function (err, docs) {
             if (err){
                 console.log("is not "+err)
             }
@@ -122,5 +129,6 @@ module.exports = {
     delet,
     getEventByDate,
     oneEventById,
-    allevents
+    allevents,
+    deleteEventBYCourseId
 }
