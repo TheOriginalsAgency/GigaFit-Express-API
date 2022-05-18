@@ -103,7 +103,7 @@ const delet = (req,res) => {
 const deleteEventBYCourseId = (req,res) => {
 
     try {
-        Event.findByIdAndDelete({courseId:req.params.id}, function (err, docs) {
+        Event.findByIdAndDelete({courseId:req.params.idCourse}, function (err, docs) {
             if (err){
                 console.log("is not "+err)
             }
