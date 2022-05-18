@@ -42,7 +42,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.post("/user/forgotPassword/:email", forgetPassword);
 //middleware
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "150kb" }));
 app.use(helmet());
 app.options("*", cors());
 app.use(cors());
