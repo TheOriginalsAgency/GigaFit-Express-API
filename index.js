@@ -168,7 +168,7 @@ const storageCourses = multer.diskStorage({
 });
 //Upload Course image
 const uploadCourses = multer({ storage: storageCourses });
-  app.post("/api/postCourse", uploadSessions.single("file"), (req, res) => {
+  app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
     try {
       return res.status(200).json("Course File uploded successfully");
     } catch (error) {
