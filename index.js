@@ -168,6 +168,7 @@ const storageCourses = multer.diskStorage({
 });
 //Upload Course image
 const uploadCourses = multer({ storage: storageCourses });
+
   app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
     try {
       return res.status(200).json("Course File uploded successfully");
@@ -175,15 +176,15 @@ const uploadCourses = multer({ storage: storageCourses });
       console.error("UploadCourse ERROR !!" + error);
     }
   });
-  app.post(
-    "/api/uploadCourse/:nameFile",
+  
+  app.post("/api/uploadCourse/:nameFile",
     uploadCourses.single("file"),
     (req, res) => {
       try {
         fs.unlinkSync(`public/images/courses/${req.params.nameFile}`);
-        return res.status(200).json("Session File updated successfully");
+        return res.status(200).json("Course File updated successfully");
       } catch (error) {
-        console.error("UploadSession ERROR !!" + error);
+        console.error("UploadCourse ERROR !!" + error);
       }
     }
   );

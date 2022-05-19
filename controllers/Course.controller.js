@@ -1,4 +1,5 @@
 const Course = require('../models/course.model')
+const Events = require('../models/event.model')
 
 // Get All Programms
 const allCourses = async (req, res) => {
@@ -59,15 +60,19 @@ const updateCourse = async (req, res) => {
 
 // delete Course
 const deleteCourse = async (req, res) => {
-    const targetedCourse = await Course.findOne({ _id: req.params.id });
+    
     try {
-        if(targetedCourse) {
-            const course = await targetedCourse.deleteOne();
-            res.status(200).json(course);
-        }
+        const targetedCourse = await Course.findOne({ _id: req.params.id }, function(err, Course){
+            Events.remove({courseId: targetedCourse._id}).exec()
+        });
+        targetedCourse.remove();
+
+        res.status(200).json(targetedCourse);
+    
     } catch(err) {
         res.status(500).json(err);
     }
+    
 }
 
 const allcourses = async (req ,res) => {
