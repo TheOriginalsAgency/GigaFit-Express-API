@@ -84,25 +84,24 @@ const updateEvent = async (req, res) => {
 // }
 
 const delet = (req,res) => {
-    try {
 
         //Delete all reservations associeted
         Reservation.deleteMany({ eventId: req.params.id}).then( (res) => {
             console.log(res);
+            Event.findByIdAndDelete(req.params.id, function (err, docs) {
+                if (err){
+                    console.log("is not "+err)
+                    res.status(500).json(err)
+                }
+                else{
+                    console.log("Deleted : ", docs);
+                    res.status(200).json(docs);
+                }
+            });
         })
 
-        Event.findByIdAndDelete(req.params.id, function (err, docs) {
-            if (err){
-                console.log("is not "+err)
-            }
-            else{
-                console.log("Deleted : ", docs);
-                res.status(200).json(docs);
-            }
-        });
-    } catch (error) {
-        res.status(500).json(error)
-    }
+        
+
 }
 
 const deleteEventBYCourseId = (req,res) => {
