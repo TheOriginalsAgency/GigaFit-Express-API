@@ -58,7 +58,7 @@ const deleteCoachs = async (req, res) => {
     const club = await Club.findOne({ _id: req.params.id });
     console.log("Targeted Club " + club);
     if (req.params.id) {
-      const updatedClub = await club.updateOne({ $pull: { coaches: { $elemMatch: { score: 8 , item: req.params.coach } }}});
+      const updatedClub = await club.updateOne({ $pull: { coaches: req.params.coach  }});
       console.log(updatedClub);
       res.status(200).json("the Club has been updated");
     } else {
