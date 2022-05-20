@@ -53,6 +53,23 @@ const updateClub = async (req, res) => {
   }
 }
 
+const deleteCoachs = async (req, res) => {
+  try {
+    const club = await Club.findOne({ _id: req.params.id });
+    console.log("Targeted Club " + club);
+    if (club) {
+      const updatedClub = await club.updateOne({ $pop: { coaches: req.body.coach}});
+      console.log(updatedClub);
+      res.status(200).json("the Club has been updated");
+    } else {
+      res.status(403).json("Club can't be updated");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+    console.log("Club Error " + err);
+  }
+}
+
 const deleteClub = async (req, res) => {
   try {
     const club = await Club.findById(req.params.id);
@@ -79,5 +96,6 @@ module.exports = {
     allClubs,
     updateClub,
     deleteClub,
-    getCountAll
+    getCountAll,
+    deleteCoachs
 }
