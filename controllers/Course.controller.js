@@ -1,5 +1,5 @@
 const Course = require('../models/course.model')
-const Events = require('../models/event.model')
+const Event = require('../models/event.model')
 
 // Get All Programms
 const allCourses = async (req, res) => {
@@ -60,19 +60,31 @@ const updateCourse = async (req, res) => {
 
 // delete Course
 const deleteCourse = async (req, res) => {
-    
     try {
-        const targetedCourse = await Course.findOne({ _id: req.params.id }, function(err, Course){
-            Events.remove({courseId: targetedCourse._id}).exec()
-        });
-        targetedCourse.remove();
+        const events = await Event.find({ courseId: req.params.id});
 
-        res.status(200).json(targetedCourse);
-    
+        //Delete all reservations associeted
+        events.forEach((e) => {
+            Reservations.deleteMany({eventId: e._id}).then( (res) => {
+                console.log(res);
+            })
+        })
+
+        //Delete all events associeted
+        Event.deleteMany({ courseId: req.params.id}).then( (res) => {
+            console.log(res);
+        })
+
+        //Delete Cours
+        const resExist = await Course.findByIdAndDelete(req.params.id);
+
+        res.status(200).json(resExist);
+        
+
     } catch(err) {
         res.status(500).json(err);
+        console.log('My => '+ err);
     }
-    
 }
 
 const allcourses = async (req ,res) => {
