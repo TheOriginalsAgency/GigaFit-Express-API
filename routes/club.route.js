@@ -7,7 +7,7 @@ router.get('/club/:id', oneClub)
 router.post('/club/addnew', addClub)
 router.put('/club/update/:id', updateClub)
 router.delete('/club/delete/:id', deleteClub)
-router.delete('/club/deleteCoach/:coach', deleteCoachs)
+router.delete('/club/deleteCoach/:id/:coach', deleteCoachs)
 router.get('/numClub', getCountAll)
 
 module.exports = router;
