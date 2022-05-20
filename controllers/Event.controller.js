@@ -84,8 +84,13 @@ const updateEvent = async (req, res) => {
 // }
 
 const delet = (req,res) => {
-
     try {
+
+        //Delete all reservations associeted
+        Reservation.deleteMany({ eventId: req.params.id}).then( (res) => {
+            console.log(res);
+        })
+
         Event.findByIdAndDelete(req.params.id, function (err, docs) {
             if (err){
                 console.log("is not "+err)
