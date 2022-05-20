@@ -76,9 +76,16 @@ const deleteCourse = async (req, res) => {
         })
 
         //Delete Cours
-        const resExist = await Course.findByIdAndDelete(req.params.id);
+        Course.findByIdAndDelete(req.params.id,  function (err, docs) {
+            if (err){
+                res.status(405).json(err);
+            }
+            else{
+                console.log("Deleted : ", docs);
+                res.status(200).json(docs);
+            }
+        });
 
-        res.status(200).json(resExist);
         
 
     } catch(err) {
