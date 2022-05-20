@@ -56,13 +56,26 @@ const updateClub = async (req, res) => {
 const deleteCoachs = async (req, res) => {
   try {
     const club = await Club.findOne({ _id: req.params.id });
-    console.log("Targeted Club " + club);
     if (req.params.id) {
-      const updatedClub = await club.updateOne({ $pull: { coaches: req.params.coach  }});
-      console.log(updatedClub);
-      res.status(200).json("the Club has been updated");
+      await club.updateOne({ $pull: { coaches: req.params.coach  }});
+      res.status(200).json("the Club Coachs has been updated");
     } else {
-      res.status(403).json("Club can't be updated");
+      res.status(403).json("Club Coachs can't be updated");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+    console.log("Club Error " + err);
+  }
+}
+
+const deleteStudios = async (req, res) => {
+  try {
+    const club = await Club.findOne({ _id: req.params.id });
+    if (req.params.id) {
+      await club.updateOne({ $pull: { studios: req.params.studio  }});
+      res.status(200).json("the Club studios has been updated");
+    } else {
+      res.status(403).json("Club studios can't be updated");
     }
   } catch (err) {
     res.status(500).json(err);
@@ -97,5 +110,6 @@ module.exports = {
     updateClub,
     deleteClub,
     getCountAll,
-    deleteCoachs
+    deleteCoachs,
+    deleteStudios
 }
