@@ -1,5 +1,6 @@
 const Course = require('../models/course.model')
 const Event = require('../models/event.model')
+const Reservation = require('../models/Reservation.model')
 
 // Get All Programms
 const allCourses = async (req, res) => {
@@ -62,16 +63,18 @@ const updateCourse = async (req, res) => {
 const deleteCourse = async (req, res) => {
     try {
         const events = await Event.find({ courseId: req.params.id});
-
+        console.log('Desired Events :' + events);
         //Delete all reservations associeted
         events.forEach((e) => {
-            Reservations.deleteMany({eventId: e._id}).then( (res) => {
+            Reservation.deleteMany({eventId: e._id}).then( (res) => {
+                console.log('Desired Reservations :');
                 console.log(res);
             })
         })
 
         //Delete all events associeted
         Event.deleteMany({ courseId: req.params.id}).then( (res) => {
+            console.log('deleted Events :');
             console.log(res);
         })
 
@@ -82,6 +85,7 @@ const deleteCourse = async (req, res) => {
             }
             else{
                 console.log("Deleted : ", docs);
+                
                 res.status(200).json(docs);
             }
         });

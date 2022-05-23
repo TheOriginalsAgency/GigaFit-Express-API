@@ -16,7 +16,7 @@ const allReservationByEvent = async (req, res) => {
     try {
 
         const reservations = await Reservation.find({eventId: req.params.id});
-        res.status(200).json(reservations);
+        res.status(200).json(reservations.length);
 
     } catch(err) {
         res.status(500).json(err);
