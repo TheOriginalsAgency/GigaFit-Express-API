@@ -12,8 +12,9 @@ const addClub = async (req, res) => {
         res.status(200).json(club);
   
       } catch (err) {
-        res.status(500).json(err)
         console.log('My => '+ err);
+        res.status(500).json(err)
+
       }
 }
 

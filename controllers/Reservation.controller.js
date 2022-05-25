@@ -12,11 +12,16 @@ const allReservation = async (req, res) => {
     }
 }
 // Get All Reservation By Event
-const allReservationByEvent = async (req, res) => {
+const allReservationByEvent = (req, res) => {
     try {
 
-        const reservations = await Reservation.find({eventId: req.params.id});
-        res.status(200).json(reservations.length);
+        Reservation.find({eventId: req.params.id})
+                    .exec((error, reservations) => {
+                        if(error) {
+                            res.status(404).json("Reservations not Found");
+                        }
+                        res.status(200).json(reservations);
+                    })
 
     } catch(err) {
         res.status(500).json(err);
@@ -26,8 +31,13 @@ const allReservationByEvent = async (req, res) => {
 const allReservationByUser = async (req, res) => {
     try {
 
-        const reservations = await Reservation.find({userId: req.params.id});
-        res.status(200).json(reservations);
+        Reservation.find({userId: req.params.id})
+                    .exec((error, reservations) => {
+                        if(error) {
+                            res.status(404).json("Reservations not Found");
+                        }
+                        res.status(200).json(reservations);
+                    })
 
     } catch(err) {
         res.status(500).json(err);

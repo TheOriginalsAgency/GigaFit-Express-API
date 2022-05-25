@@ -1,31 +1,27 @@
 const Program = require('../models/Program.model')
 
 // Get All Programms
-const allPrograms = async (req, res) => {
-    try {
+const allPrograms = (req, res) => {
 
-        const programms = await Program.find();
-        res.status(200).json(programms);
+        Program.find()
+                .exec(function(err, programs) {
+                    if(err) {
+                        return res.status(404).json("Products Not Found !");
+                    }
+                    return res.status(200).json(programs);
+                })
 
-    } catch(err) {
-        res.status(500).json(err);
-        console.log('My error !!! ' + err);
-    }
 }
 
 // Get One Program
 const oneProgram = async (req, res) => {
-    const program = await Program.findOne({ _id: req.params.id });
-    try {
-
-        if (program) {
-            res.status(200).send(program);
-        } 
-
-    } catch(err) {
-        res.status(500).json(err);
-        console.log('My error !!! ' + err);
-    }
+    Program.findOne({ _id: req.params.id })
+            .exec((err, program) => {
+                if(err) {
+                    return res.status(404).json("Product Not Found !");
+                }
+                return res.status(200).json(program);
+            })
 }
 
 // Add new Program
