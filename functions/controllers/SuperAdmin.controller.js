@@ -71,12 +71,12 @@ const superAdminRegistration = async (req, res) => {
         if (superAdmin) {
             validPassword = await bcrypt.compare(req.body.password, superAdmin.password)
             if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
-            token = jwt.sign({superAdmin}, process.env.SECRET_KEY);
+            token = jwt.sign({superAdmin}, "MohammedDevGigaFit2021");
         }
         if(admin) {
             validPassword = await bcrypt.compare(req.body.password, admin.password)
             if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
-            token = jwt.sign({admin}, process.env.SECRET_KEY);
+            token = jwt.sign({admin}, "MohammedDevGigaFit2021");
         }
         
         console.log(token);
@@ -103,7 +103,7 @@ const superAdminRegistration = async (req, res) => {
         if(admin) {
             validPassword = await bcrypt.compare(req.body.password, admin.password)
             if(!validPassword) return res.status(400).json('Votre Mot de Passe est Incorrect')
-            token = jwt.sign({admin}, process.env.SECRET_KEY);
+            token = jwt.sign({admin}, "MohammedDevGigaFit2021");
             const loggedUser = await Logger.findOne({id_user: admin._id, dateLog : `${date}-${month}-${year}`})
                 console.log(loggedUser);
                 if(loggedUser) return res.status(200).json({token, admin, success});

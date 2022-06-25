@@ -1,3 +1,4 @@
+const functions = require("firebase-functions");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -27,7 +28,7 @@ var fs = require("fs");
 dotenv.config();
 
 mongoose.connect(
-  process.env.DB_CONNECT,
+  "mongodb+srv://Amine:Ol54o9y759TYOj9J@cluster0.qghv6.mongodb.net/GigaFit?retryWrites=true&w=majority",
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log("Connected to MongoDB...");
@@ -70,11 +71,13 @@ function globelmiddlewire(req, res, next) {
     return next();
   const token = auth && auth.split(" ")[1];
   if (token == null) return res.sendStatus(401);
-  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+  jwt.verify(token, "MohammedDevGigaFit2021", (err, user) => {
     if (err) return res.sendStatus(403);
     next();
   });
 }
+
+
 
 //images Programs uploads
 const storagePrograms = multer.diskStorage({
@@ -276,8 +279,11 @@ app.use("/api", courseFunctions);
 app.use("/api", eventFunctions);
 app.use("/api", reservationFunctions);
 
-const port = process.env.PORT || 2020;
+const port = 2022 || 2020;
 
 app.listen(port, () => {
   console.log(`Backend API server is running on port ${process.env.PORT} !`);
 });
+
+
+exports.app = functions.https.onRequest(app);

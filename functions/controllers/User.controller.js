@@ -84,7 +84,7 @@ const userLogin = async (req, res) => {
     if (!validPassword)
       return res.status(400).json("Mot de passe incorrect. Réessayez");
 
-    const token = jwt.sign({ user }, process.env.SECRET_KEY);
+    const token = jwt.sign({ user }, "MohammedDevGigaFit2021");
     console.log(token);
     const success = "Success";
 

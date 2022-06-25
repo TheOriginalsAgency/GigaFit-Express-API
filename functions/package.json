@@ -6,13 +6,15 @@
   "repository": "https://github.com/Mohammed1Dev/GigaFit-Express-API.git",
   "author": "Mohammed-Amine Bettaoui",
   "license": "MIT",
-  "private": true,
-  "engines" : {
-    "npm" : ">=7.0.0",
-    "node" : ">=14.17.6"
+  "engines": {
+    "node": "14"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
   "dependencies": {
     "axios": "^0.26.0",
@@ -21,16 +23,21 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fcm-node": "^1.6.1",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
     "helmet": "^4.6.0",
     "https": "^1.0.0",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12",
+    "mongoose": "^6.3.6",
     "multer": "^1.4.3",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.7.2",
-    "nodemailer-express-handlebars": "^4.0.0",
-    "nodemon": "^2.0.15",
+    "nodemailer-express-handlebars": "^5.0.0",
     "onesignal-node": "^3.3.0"
-  }
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
 }
