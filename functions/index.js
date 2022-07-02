@@ -233,6 +233,7 @@ const storageClubs = multer.diskStorage({
 });
 
 const uploadClubs = multer({ storage: storageClubs });
+
 app.post(
   "/api/updateClubs/:nameFile",
   uploadClubs.single("file"),
