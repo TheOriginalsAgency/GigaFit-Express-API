@@ -22,6 +22,8 @@ const eventFunctions = require('./routes/event.route')
 const reservationFunctions = require('./routes/reservation.route')
 const { forgetPassword } = require("./controllers/User.controller");
 const jwt = require("jsonwebtoken");
+// const { initializeApp } = require("firebase/app");
+// const { getStorage } = require("firebase/storage");
 
 var fs = require("fs");
 
@@ -66,7 +68,8 @@ function globelmiddlewire(req, res, next) {
   if (
     req.url === "/api/user/login" ||
     req.url === "/api/user/registration" ||
-    req.url === "/api/super-admin/login"
+    req.url === "/api/super-admin/login" ||
+    req.url === "/api/public/images/"
   )
     return next();
   const token = auth && auth.split(" ")[1];
@@ -147,9 +150,6 @@ app.post(
 );
 
 
-
-
-
 // app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
 //   try {
 //     return res.status(200).json("Course File uploded successfully");
@@ -174,7 +174,7 @@ const uploadCourses = multer({ storage: storageCourses });
 
   app.post("/api/postCourse", uploadCourses.single("file"), (req, res) => {
     try {
-      return res.status(200).json("Course File uploded successfully");
+      return res.status(200).json("Course File uploded successfully");  
     } catch (error) {
       console.error("UploadCourse ERROR !!" + error);
     }
@@ -184,7 +184,7 @@ const uploadCourses = multer({ storage: storageCourses });
     uploadCourses.single("file"),
     (req, res) => {
       try {
-        fs.unlinkSync(`public/images/courses/${req.params.nameFile}`);
+        // fs.unlinkSync(`public/images/courses/${req.params.nameFile}`);
         return res.status(200).json("Course File updated successfully");
       } catch (error) {
         console.error("UploadCourse ERROR !!" + error);

@@ -349,7 +349,6 @@ const getCountUsersByMonth = async (req, res) => {
       All[i].mens = 0;
     }
   }
-
   res.status(200).json(All);
 };
 

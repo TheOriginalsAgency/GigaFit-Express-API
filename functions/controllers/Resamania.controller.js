@@ -144,7 +144,7 @@ const mergeGigaFitClubs = async (req, res) => {
 
     } catch (error) {
         console.log('====================================');
-        console.log('Resa ERROR' +error);
+        console.log('Resa ERROR' + error);
         console.log('====================================');
     }
 

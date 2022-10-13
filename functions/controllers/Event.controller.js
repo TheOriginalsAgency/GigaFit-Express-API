@@ -1,4 +1,6 @@
+const { boolean } = require('joi');
 const Event = require('../models/event.model')
+const Reservation = require('../models/Reservation.model')
 
 // Get All Events
 const allEventsByClub = async (req, res) => {
@@ -84,6 +86,8 @@ const updateEvent = async (req, res) => {
 // }
 
 const delet = (req,res) => {
+    let done = false;
+    let rusalt = {}
 
         //Delete all reservations associeted
         Reservation.deleteMany({ eventId: req.params.id}).then( (res) => {
@@ -91,16 +95,18 @@ const delet = (req,res) => {
             Event.findByIdAndDelete(req.params.id, function (err, docs) {
                 if (err){
                     console.log("is not "+err)
-                    res.status(500).json(err)
+                    rusalt ={...err} ;
                 }
                 else{
                     console.log("Deleted : ", docs);
-                    res.status(200).json(docs);
+                    done === true;
+                    rusalt = {...docs} ;
+                    
                 }
             });
         })
-
-        
+        console.log('chi haja '+rusalt);
+        done ? res.status(500).json(rusalt) : res.status(200).json(rusalt);
 
 }
 
